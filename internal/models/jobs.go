@@ -51,6 +51,31 @@ func (m *JobModel) Insert(ctx context.Context, j *Job) (int64, error) {
 	return id, nil
 }
 
+// Upsert inserts a job seen in a fetch, or updates it and reopens it if it
+// already existed (matched by source + external_id) and had been closed.
+func (m *JobModel) Upsert(ctx context.Context, j *Job) (int64, error) {
+	const q = `
+		INSERT INTO jobs (external_id, company_id, title, location, url, source, status, posted_at, created_at)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now())
+		ON CONFLICT (source, external_id) DO UPDATE SET
+			company_id = excluded.company_id,
+			title = excluded.title,
+			location = excluded.location,
+			url = excluded.url,
+			status = $7,
+			closed_at = NULL
+		RETURNING id`
+
+	var id int64
+	err := m.DB.QueryRow(ctx, q,
+		j.ExternalID, j.CompanyID, j.Title, j.Location, j.URL, j.Source, StatusOpen, j.PostedAt,
+	).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
+}
+
 // Get returns a single job by ID.
 func (m *JobModel) Get(ctx context.Context, id int64) (*Job, error) {
 	const q = `

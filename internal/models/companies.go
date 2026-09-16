@@ -47,6 +47,22 @@ func (m *CompanyModel) Get(ctx context.Context, id int64) (*Company, error) {
 	return c, nil
 }
 
+// FindOrCreate returns the company with the given title, creating it
+// (with description, if the title didn't exist yet) when missing.
+func (m *CompanyModel) FindOrCreate(ctx context.Context, title, description string) (*Company, error) {
+	const q = `
+		INSERT INTO companies (title, description) VALUES ($1, $2)
+		ON CONFLICT (title) DO UPDATE SET title = excluded.title
+		RETURNING id, title, description`
+
+	c := &Company{}
+	err := m.DB.QueryRow(ctx, q, title, description).Scan(&c.ID, &c.Title, &c.Description)
+	if err != nil {
+		return nil, err
+	}
+	return c, nil
+}
+
 // List returns every company, ordered by title.
 func (m *CompanyModel) List(ctx context.Context) ([]*Company, error) {
 	const q = `SELECT id, title, description FROM companies ORDER BY title`

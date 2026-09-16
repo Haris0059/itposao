@@ -9,7 +9,7 @@ Notes for the future Postgres schema, derived from `internal/models`. No migrati
 | column      | type   | notes         |
 |-------------|--------|---------------|
 | id          | bigint | PK            |
-| title       | text   |               |
+| title       | text   | UNIQUE — matched by `FindOrCreate` |
 | description | text   |               |
 
 ### jobs
@@ -17,7 +17,7 @@ Notes for the future Postgres schema, derived from `internal/models`. No migrati
 | column      | type      | notes                                    |
 |-------------|-----------|-------------------------------------------|
 | id          | bigint    | PK                                        |
-| external_id | text      | job ID in the source's own system         |
+| external_id | text      | job ID in the source's own system, UNIQUE together with `source` |
 | company_id  | bigint    | FK -> companies.id                        |
 | title       | text      |                                           |
 | location    | text      |                                           |
@@ -35,10 +35,12 @@ Notes for the future Postgres schema, derived from `internal/models`. No migrati
 - `Insert` — `INSERT INTO companies (title, description) VALUES ($1, $2) RETURNING id`
 - `Get` — `SELECT id, title, description FROM companies WHERE id = $1`
 - `List` — `SELECT id, title, description FROM companies ORDER BY title`
+- `FindOrCreate(title, description)` — upserts by `title` (`ON CONFLICT (title) DO UPDATE`) and returns the row either way; used by the scraper to resolve a source's company without a manual seed step
 
 ### jobs (`internal/models/jobs.go`)
 
 - `Insert` — `INSERT INTO jobs (external_id, company_id, title, location, url, source, status, posted_at, created_at) VALUES (..., now()) RETURNING id` (always inserted as `status = open`)
+- `Upsert` — same columns as `Insert`, `ON CONFLICT (source, external_id) DO UPDATE` refreshing title/location/url/company_id and reopening (`status = open`, `closed_at = NULL`) if it had been closed; this is what the scraper calls per fetched job
 - `Get` — `SELECT id, external_id, company_id, title, location, url, source, status, posted_at, created_at, closed_at FROM jobs WHERE id = $1`
 - `Latest` — same columns, `WHERE status = 'open' ORDER BY posted_at DESC LIMIT $2`
 - `Reconcile(source, seenExternalIDs)` — `UPDATE jobs SET status = 'closed', closed_at = now() WHERE source = $2 AND status = 'open' AND NOT (external_id = ANY($4))`; closes jobs no longer returned by the source's latest fetch
