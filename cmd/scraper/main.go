@@ -18,7 +18,8 @@ import (
 // companyTitle maps a source's Name() to the display name of the company
 // it fetches jobs for.
 var companyTitle = map[string]string{
-	"htec": "HTEC Group",
+	"htec":    "HTEC Group",
+	"infobip": "Infobip",
 }
 
 func main() {
@@ -46,6 +47,7 @@ func main() {
 
 	srcs := []sources.Source{
 		&sources.HTEC{},
+		&sources.Infobip{},
 	}
 
 	for _, src := range srcs {
