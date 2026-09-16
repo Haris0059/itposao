@@ -8,6 +8,8 @@ import (
 
 func routes(application *app.Application) *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /health", application.HandleHealth)
+	mux.HandleFunc("GET /v1/health", application.HandleHealth)
+	mux.HandleFunc("GET /v1/jobs", application.HandleJobs)
+	mux.HandleFunc("GET /v1/companies", application.HandleCompanies)
 	return mux
 }

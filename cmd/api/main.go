@@ -26,6 +26,7 @@ func main() {
 	log := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
 	var jobs *models.JobModel
+	var companies *models.CompanyModel
 	if *dsn != "" {
 		pool, err := pgxpool.New(context.Background(), *dsn)
 		if err != nil {
@@ -34,9 +35,10 @@ func main() {
 		}
 		defer pool.Close()
 		jobs = &models.JobModel{DB: pool}
+		companies = &models.CompanyModel{DB: pool}
 	}
 
-	application := app.New(log, jobs)
+	application := app.New(log, jobs, companies)
 
 	log.Info("itposao api listening", "addr", *addr)
 	if err := http.ListenAndServe(*addr, routes(application)); err != nil {

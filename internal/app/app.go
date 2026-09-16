@@ -9,10 +9,11 @@ import (
 )
 
 type Application struct {
-	Logger *slog.Logger
-	Jobs   *models.JobModel
+	Logger    *slog.Logger
+	Jobs      *models.JobModel
+	Companies *models.CompanyModel
 }
 
-func New(logger *slog.Logger, jobs *models.JobModel) *Application {
-	return &Application{Logger: logger, Jobs: jobs}
+func New(logger *slog.Logger, jobs *models.JobModel, companies *models.CompanyModel) *Application {
+	return &Application{Logger: logger, Jobs: jobs, Companies: companies}
 }
