@@ -293,11 +293,11 @@
     "name": "LANACO (Sarajevo office)",
     "careers_url": "https://www.lanaco.com/en/otvorene-pozicije",
     "ats": "custom-html",
-    "api_url": null,
-    "api_method": null,
+    "api_url": "https://www.lanaco.com/en/otvorene-pozicije",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "No ATS signature found in static HTML"
+    "verified": true,
+    "notes": "Implemented in internal/sources/lanaco.go (server-rendered HTML scraped with regexp)."
   },
   {
     "name": "LINK group",
