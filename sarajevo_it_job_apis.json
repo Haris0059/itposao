@@ -162,12 +162,12 @@
   {
     "name": "Galeyo (formerly Walter Code)",
     "careers_url": "https://waltercode.com/careers/",
-    "ats": "custom",
-    "api_url": null,
-    "api_method": null,
+    "ats": "custom-html",
+    "api_url": "https://www.galeyo.com/open-positions",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "Source notes an in-house ATS at icehr.walter.ba; no signature confirmed in this pass, needs direct inspection of that subdomain"
+    "verified": true,
+    "notes": "Implemented in internal/sources/galeyo.go. waltercode.com redirects to galeyo.com; /open-positions is a server-rendered Webflow CMS list. icehr.walter.ba is a private HR login, not a board."
   },
   {
     "name": "GAUSS d.o.o.",

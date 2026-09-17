@@ -38,6 +38,7 @@ var companyTitle = map[string]string{
 	"systemverification": "System Verification",
 	"asseco-see":         "Asseco SEE",
 	"alemsistem":         "Alem Sistem",
+	"galeyo":             "Galeyo",
 }
 
 func main() {
@@ -83,6 +84,7 @@ func main() {
 		&sources.SystemVerification{},
 		&sources.AssecoSEE{},
 		&sources.AlemSistem{},
+		&sources.Galeyo{},
 	}
 
 	for _, src := range srcs {
