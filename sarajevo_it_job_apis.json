@@ -132,12 +132,12 @@
   {
     "name": "ENIT d.o.o.",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
-    "api_method": null,
+    "ats": "oneassessment",
+    "api_url": "https://nites.oneassessment.com/api/career/positions",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "Facebook page only, no dedicated site/ATS; myworkdayjobs.com match on FB page fetch is a false positive (Facebook's own scripts)"
+    "verified": true,
+    "notes": "Implemented in internal/sources/nites.go. ENIT rebranded to NITES (enit.ba redirects to nites.eu); careers board is OneAssessment, JSON at /api/career/positions."
   },
   {
     "name": "FishingBooker",
