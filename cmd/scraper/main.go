@@ -8,6 +8,7 @@ import (
 	"flag"
 	"log/slog"
 	"os"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
@@ -18,8 +19,14 @@ import (
 // companyTitle maps a source's Name() to the display name of the company
 // it fetches jobs for.
 var companyTitle = map[string]string{
-	"htec":    "HTEC Group",
-	"infobip": "Infobip",
+	"htec":     "HTEC Group",
+	"infobip":  "Infobip",
+	"atlantbh": "Atlantbh",
+	"king-ict": "KING ICT",
+	"mistral":  "Mistral",
+	"rubicon":  "RUBICON",
+	"symphony": "Symphony",
+	"zendev":   "ZenDev",
 }
 
 func main() {
@@ -77,6 +84,9 @@ func run(ctx context.Context, log *slog.Logger, companies *models.CompanyModel, 
 	seenIDs := make([]string, 0, len(fetched))
 	for _, j := range fetched {
 		j.CompanyID = company.ID
+		if j.PostedAt.IsZero() {
+			j.PostedAt = time.Now()
+		}
 		if _, err := jobs.Upsert(ctx, j); err != nil {
 			return err
 		}
