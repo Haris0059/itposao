@@ -22,12 +22,12 @@
   {
     "name": "Alem Sistem",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
-    "api_method": null,
+    "ats": "breezy",
+    "api_url": "https://alem-sistem.breezy.hr/json",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "Homepage has no detectable ATS signature; no careers page found"
+    "verified": true,
+    "notes": "Implemented in internal/sources/alemsistem.go (Breezy HR JSON; linked from alemsistem.ba/karijera)."
   },
   {
     "name": "Asseco SEE BH",
