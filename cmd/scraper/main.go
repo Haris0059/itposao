@@ -44,6 +44,7 @@ var companyTitle = map[string]string{
 	"jitasa":             "Jitasa Group",
 	"linkgroup":          "LINK group",
 	"tacta":              "Tacta",
+	"zira":               "ZIRA Group",
 }
 
 func main() {
@@ -95,6 +96,7 @@ func main() {
 		&sources.Jitasa{},
 		&sources.LinkGroup{},
 		&sources.Tacta{},
+		&sources.Zira{},
 	}
 
 	for _, src := range srcs {

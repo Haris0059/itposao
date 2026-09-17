@@ -522,11 +522,11 @@
   {
     "name": "ZIRA Group",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
-    "api_method": null,
+    "ats": "recruitee",
+    "api_url": "https://zira.recruitee.com/api/offers/",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "No ATS signature found on homepage; no dedicated careers page found"
+    "verified": true,
+    "notes": "Implemented in internal/sources/zira.go. zira.com.ba redirects to ziragroup.com; careers/open-positions links to the Recruitee board zira.recruitee.com."
   }
 ]
