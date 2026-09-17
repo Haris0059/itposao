@@ -28,7 +28,7 @@ go run ./cmd/api -addr :8080 -dsn "$DATABASE_URL"
 
 Source struct names are PascalCase (`HTEC`, `KingICT`), but `Name()` slugs are inconsistent (`"king-ict"` vs `"cyberarrow"`) — check the `companyTitle` map for the exact string rather than assuming a convention.
 
-`sarajevo_it_companies.json` and `sarajevo_it_job_apis.json` at repo root are reference data for scouting future sources, not consumed by any Go code — don't treat them as live inputs, but don't delete them either.
+`companies.json` at repo root is reference data for scouting sources, not consumed by any Go code. It groups companies as `scraped` (has a source; `source` = its `Name()` slug), `good` (board exists but empty/stale — revisit), `blocked` (needs a headless browser), and `bad` (no scrapable board). When adding a source, move its entry to `scraped`.
 
 ## API conventions
 
