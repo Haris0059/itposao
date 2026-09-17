@@ -32,12 +32,12 @@
   {
     "name": "Asseco SEE BH",
     "careers_url": "https://asseco.com/career/",
-    "ats": "custom-html",
-    "api_url": null,
-    "api_method": null,
+    "ats": "peopleforce",
+    "api_url": "https://asee.peopleforce.io/careers",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "Fetched page has no known ATS signature in static HTML; likely a JS-rendered custom board, not verified"
+    "verified": true,
+    "notes": "Implemented in internal/sources/asseco_see.go. asseco.com/career 403s; the ASEE group board is PeopleForce server-rendered HTML at asee.peopleforce.io/careers (paginated, all group subsidiaries)."
   },
   {
     "name": "Atlantbh",
