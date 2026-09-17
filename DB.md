@@ -12,6 +12,14 @@ Notes for the future Postgres schema, derived from `internal/models`. No migrati
 | title       | text   | UNIQUE — matched by `FindOrCreate` |
 | description | text   |               |
 
+### countries
+
+| column | type   | notes                          |
+|--------|--------|---------------------------------|
+| id     | bigint | PK                              |
+| name   | text   | UNIQUE — e.g. "Bosnia and Herzegovina" |
+| code   | text   | UNIQUE — ISO 3166-1 alpha-2, e.g. "BA" |
+
 ### jobs
 
 | column      | type      | notes                                    |
@@ -45,7 +53,13 @@ Notes for the future Postgres schema, derived from `internal/models`. No migrati
 - `Latest` — same columns, `WHERE status = 'open' ORDER BY posted_at DESC LIMIT $2`
 - `Reconcile(source, seenExternalIDs)` — `UPDATE jobs SET status = 'closed', closed_at = now() WHERE source = $2 AND status = 'open' AND NOT (external_id = ANY($4))`; closes jobs no longer returned by the source's latest fetch
 
+### countries (`internal/models/countries.go`)
+
+- `FindOrCreate(name, code)` — upserts by `name`, used by `cmd/seed` to load `countries.json`
+- `List` — `SELECT id, name, code FROM countries ORDER BY name`
+
 ## Relationships
 
 - `jobs.company_id` -> `companies.id` (many jobs per company). Lets the UI list/search by company independent of whether that company currently has open jobs.
 - `jobs.source` is not a FK — it identifies which fetcher in `internal/sources` produced the row (e.g. `htec`), used by `Reconcile` to scope the diff. A company can in principle have jobs from more than one source.
+- `countries` has no FK from `jobs`. `jobs.location` is messy free text (e.g. HTEC's "Bosnia and Herzegovina, North Macedonia, ..."), so a job is associated with a country by substring match against `countries.name`, not a join — see the dev viewer's location filter (`web/index.html`).

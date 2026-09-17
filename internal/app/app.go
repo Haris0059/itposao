@@ -12,8 +12,9 @@ type Application struct {
 	Logger    *slog.Logger
 	Jobs      *models.JobModel
 	Companies *models.CompanyModel
+	Countries *models.CountryModel
 }
 
-func New(logger *slog.Logger, jobs *models.JobModel, companies *models.CompanyModel) *Application {
-	return &Application{Logger: logger, Jobs: jobs, Companies: companies}
+func New(logger *slog.Logger, jobs *models.JobModel, companies *models.CompanyModel, countries *models.CountryModel) *Application {
+	return &Application{Logger: logger, Jobs: jobs, Companies: companies, Countries: countries}
 }

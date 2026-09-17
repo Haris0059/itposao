@@ -21,7 +21,7 @@ func (app *Application) HandleJobs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jobs, err := app.Jobs.Latest(r.Context(), 50)
+	jobs, err := app.Jobs.Latest(r.Context(), 500)
 	if err != nil {
 		app.Logger.Error("list jobs failed", "error", err)
 		http.Error(w, "internal error", http.StatusInternalServerError)
@@ -43,4 +43,19 @@ func (app *Application) HandleCompanies(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	writeJSON(w, http.StatusOK, companies)
+}
+
+func (app *Application) HandleCountries(w http.ResponseWriter, r *http.Request) {
+	if app.Countries == nil {
+		http.Error(w, "database not configured", http.StatusServiceUnavailable)
+		return
+	}
+
+	countries, err := app.Countries.List(r.Context())
+	if err != nil {
+		app.Logger.Error("list countries failed", "error", err)
+		http.Error(w, "internal error", http.StatusInternalServerError)
+		return
+	}
+	writeJSON(w, http.StatusOK, countries)
 }

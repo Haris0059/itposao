@@ -27,6 +27,7 @@ func main() {
 
 	var jobs *models.JobModel
 	var companies *models.CompanyModel
+	var countries *models.CountryModel
 	if *dsn != "" {
 		pool, err := pgxpool.New(context.Background(), *dsn)
 		if err != nil {
@@ -36,9 +37,10 @@ func main() {
 		defer pool.Close()
 		jobs = &models.JobModel{DB: pool}
 		companies = &models.CompanyModel{DB: pool}
+		countries = &models.CountryModel{DB: pool}
 	}
 
-	application := app.New(log, jobs, companies)
+	application := app.New(log, jobs, companies, countries)
 
 	log.Info("itposao api listening", "addr", *addr)
 	if err := http.ListenAndServe(*addr, routes(application)); err != nil {

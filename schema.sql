@@ -7,6 +7,12 @@ CREATE TABLE IF NOT EXISTS companies (
     description TEXT NOT NULL DEFAULT ''
 );
 
+CREATE TABLE IF NOT EXISTS countries (
+    id   BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    code TEXT NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS jobs (
     id          BIGSERIAL PRIMARY KEY,
     external_id TEXT NOT NULL,

@@ -17,13 +17,56 @@
 <div id="controls">
   <input id="search" type="search" placeholder="Search title or location…">
   <select id="companyFilter"><option value="">All companies</option></select>
-  <select id="locationFilter"><option value="">All locations</option></select>
+  <select id="locationFilter"><option value="">All countries</option></select>
 </div>
 <ul id="jobs">Loading…</ul>
 
 <script>
 let jobs = [];
 let companyTitle = {};
+
+// Locations are messy free text: sometimes a country name ("Bosnia and
+// Herzegovina"), sometimes just a city ("Sarajevo") or an abbreviation
+// ("BiH", "USA"). These aliases were resolved once against the open-source
+// dr5hn/countries-states-cities-database (github.com/dr5hn/countries-states-
+// cities-database) plus a couple of cities missing from it (Rugvica,
+// Beograd), so city/country name matching doesn't have to be guessed again.
+const CITY_TO_COUNTRY = {
+  'Split': 'Croatia',
+  'Zagreb': 'Croatia',
+  'Rijeka': 'Croatia',
+  'Vodnjan': 'Croatia',
+  'Rugvica': 'Croatia',
+  'Warsaw': 'Poland',
+  'Warszawa': 'Poland',
+  'Budapest': 'Hungary',
+  'Munich': 'Germany',
+  'Sarajevo': 'Bosnia and Herzegovina',
+  'Beograd': 'Serbia',
+  'Seattle': 'United States',
+  'San Francisco': 'United States',
+  'Palo Alto': 'United States',
+};
+const ABBR_TO_COUNTRY = {
+  'BiH': 'Bosnia and Herzegovina',
+  'USA': 'United States',
+  'UK': 'United Kingdom',
+  'UAE': 'United Arab Emirates',
+  'MX': 'Mexico',
+};
+
+// True if a job's raw Location string refers to the given country, whether
+// it names the country directly, an abbreviation, or a known city.
+function locationIsCountry(location, countryName) {
+  if (location.includes(countryName)) return true;
+  for (const [abbr, country] of Object.entries(ABBR_TO_COUNTRY)) {
+    if (country === countryName && new RegExp(`\\b${abbr}\\b`).test(location)) return true;
+  }
+  for (const [city, country] of Object.entries(CITY_TO_COUNTRY)) {
+    if (country === countryName && location.includes(city)) return true;
+  }
+  return false;
+}
 
 function render() {
   const q = document.getElementById('search').value.trim().toLowerCase();
@@ -32,7 +75,7 @@ function render() {
 
   const filtered = jobs.filter(j => {
     if (companyID && String(j.CompanyID) !== companyID) return false;
-    if (location && !j.Location.includes(location)) return false;
+    if (location && !locationIsCountry(j.Location, location)) return false;
     if (!q) return true;
     const haystack = `${j.Title} ${j.Location} ${companyTitle[j.CompanyID] ?? ''}`.toLowerCase();
     return haystack.includes(q);
@@ -49,9 +92,10 @@ function render() {
 }
 
 async function load() {
-  const [jobsRes, companies] = await Promise.all([
+  const [jobsRes, companies, countries] = await Promise.all([
     fetch('/v1/jobs').then(r => r.json()),
     fetch('/v1/companies').then(r => r.json()),
+    fetch('/v1/countries').then(r => r.json()),
   ]);
   jobs = jobsRes || [];
   companyTitle = Object.fromEntries((companies || []).map(c => [c.ID, c.Title]));
@@ -64,21 +108,13 @@ async function load() {
     select.appendChild(opt);
   }
 
-  // Location strings are messy comma-joined lists (e.g. HTEC's "Bosnia and
-  // Herzegovina, North Macedonia, ..."), so split into individual places
-  // for the dropdown and filter by substring match against the raw field.
-  const places = new Set();
-  for (const j of jobs) {
-    for (const p of j.Location.split(',')) {
-      const trimmed = p.trim();
-      if (trimmed) places.add(trimmed);
-    }
-  }
+  // Only offer countries (from the countries table) that at least one job
+  // actually resolves to, via locationIsCountry above.
   const locationSelect = document.getElementById('locationFilter');
-  for (const p of [...places].sort()) {
+  for (const c of (countries || []).filter(c => jobs.some(j => locationIsCountry(j.Location, c.Name)))) {
     const opt = document.createElement('option');
-    opt.value = p;
-    opt.textContent = p;
+    opt.value = c.Name;
+    opt.textContent = c.Name;
     locationSelect.appendChild(opt);
   }
 
