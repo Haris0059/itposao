@@ -232,12 +232,12 @@
   {
     "name": "Jitasa Group (Jitasa d.o.o. Sarajevo)",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
-    "api_method": null,
+    "ats": "custom-html",
+    "api_url": "https://www.jitasagroup.com/about/careers/",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "No careers page found; hiring announced via Facebook only"
+    "verified": true,
+    "notes": "Implemented in internal/sources/jitasa.go: careers page links each opening as a static PDF with a location span; scraped with regexp."
   },
   {
     "name": "itMedia",
