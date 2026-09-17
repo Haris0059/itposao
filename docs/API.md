@@ -10,6 +10,13 @@ Aggregates IT job postings from Sarajevo/regional company career pages into one 
 
 **Rate limits:** None enforced.
 
+## Endpoints
+
+- `GET /v1/health` — liveness check.
+- `GET /v1/jobs` — open job postings.
+- `GET /v1/companies` — companies with jobs.
+- `GET /v1/countries` — reference list of countries, used to classify job locations.
+
 ---
 
 ## Quick Start

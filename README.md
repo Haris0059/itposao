@@ -22,16 +22,9 @@ go run ./cmd/scraper -dsn "$DATABASE_URL"    # fetches jobs from all sources
 go run ./cmd/api -addr :8080 -dsn "$DATABASE_URL"
 ```
 
-`-addr` defaults to `:8080`. Accepts either a bare port (`8080`) or a full address (`:8080`, `0.0.0.0:8080`). Without `-dsn`, the API starts but the endpoints below return 503.
+`-addr` defaults to `:8080`. Accepts either a bare port (`8080`) or a full address (`:8080`, `0.0.0.0:8080`). Without `-dsn`, the API starts but the endpoints in [docs/API.md](docs/API.md) return 503.
 
 Serves the dev viewer (`web/index.html`) at `/` — search plus filters by company, country, position, and seniority level.
-
-## Endpoints
-
-- `GET /v1/health` — liveness check.
-- `GET /v1/jobs` — open job postings.
-- `GET /v1/companies` — companies with jobs.
-- `GET /v1/countries` — reference list of countries, used to classify job locations.
 
 ## Docs
 
