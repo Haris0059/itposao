@@ -1,0 +1,461 @@
+{
+  "scraped": [
+    {
+      "source": "alemsistem",
+      "name": "Alem Sistem",
+      "website": "https://www.alemsistem.ba/",
+      "careers_url": null,
+      "ats": "breezy",
+      "api_url": "https://alem-sistem.breezy.hr/json",
+      "notes": "Implemented in internal/sources/alemsistem.go (Breezy HR JSON; linked from alemsistem.ba/karijera)."
+    },
+    {
+      "source": "allops",
+      "name": "AllOps Solutions",
+      "website": "https://github.com/allops-solutions",
+      "careers_url": null,
+      "ats": "wordpress-rest",
+      "api_url": "https://allops.co/wp-json/wp/v2/job?per_page=100",
+      "notes": "Implemented in internal/sources/allops.go: WP REST 'job' post type for the list, plus each job page scraped for location."
+    },
+    {
+      "source": "asseco-see",
+      "name": "Asseco SEE BH",
+      "website": "https://asseco.com/",
+      "careers_url": "https://asseco.com/career/",
+      "ats": "peopleforce",
+      "api_url": "https://asee.peopleforce.io/careers",
+      "notes": "Implemented in internal/sources/asseco_see.go. asseco.com/career 403s; the ASEE group board is PeopleForce server-rendered HTML at asee.peopleforce.io/careers (paginated, all group subsidiaries)."
+    },
+    {
+      "source": "atlantbh",
+      "name": "Atlantbh",
+      "website": "https://atlantbh.com/",
+      "careers_url": "https://atlantbh.com/jobs/",
+      "ats": "workable",
+      "api_url": "https://apply.workable.com/api/v1/widget/accounts/atlantbh?details=true",
+      "notes": "Confirmed: page embeds workable.com/atlantbh job links; public widget API returns full job data (title, description, department, etc.)"
+    },
+    {
+      "source": "authoritypartners",
+      "name": "Authority Partners",
+      "website": "https://www.authoritypartners.com/",
+      "careers_url": "https://authoritypartnersinc.catsone.com/careers/",
+      "ats": "catsone",
+      "api_url": null,
+      "notes": "Confirmed CATS ATS (catsone.com), client_id=86212, but portal is a client-rendered Remix/React app — no JSON endpoint found from static fetch (tried /jobs, .json, /jobs.json, ?client_id=, /api/v1/careers/<id>, all returned HTML shell). Would need a headless browser or CATS API key to scrape."
+    },
+    {
+      "source": "capslock",
+      "name": "CapsLock",
+      "website": "https://capslock.global/",
+      "careers_url": "https://capslock.global/careers/",
+      "ats": "custom-html",
+      "api_url": null,
+      "notes": "No ATS signature found in static HTML"
+    },
+    {
+      "source": "comtrade",
+      "name": "Comtrade System Integration Sarajevo",
+      "website": "https://www.comtrade.com/",
+      "careers_url": "https://www.comtrade.com/jobs/",
+      "ats": "custom-html",
+      "api_url": null,
+      "notes": "No ATS signature found in static HTML; group-level page, likely JS-rendered"
+    },
+    {
+      "source": "cyberarrow",
+      "name": "CyberArrow Technology",
+      "website": "https://www.cyberarrow.io/",
+      "careers_url": "https://www.cyberarrow.io/careers/",
+      "ats": "custom-html",
+      "api_url": null,
+      "notes": "No ATS signature found in static HTML"
+    },
+    {
+      "source": "nites",
+      "name": "ENIT d.o.o.",
+      "website": "https://www.facebook.com/enitcompany/",
+      "careers_url": null,
+      "ats": "oneassessment",
+      "api_url": "https://nites.oneassessment.com/api/career/positions",
+      "notes": "Implemented in internal/sources/nites.go. ENIT rebranded to NITES (enit.ba redirects to nites.eu); careers board is OneAssessment, JSON at /api/career/positions."
+    },
+    {
+      "source": "fishingbooker",
+      "name": "FishingBooker",
+      "website": "https://fishingbooker.com/",
+      "careers_url": "https://fishingbooker.com/careers",
+      "ats": "workable",
+      "api_url": "https://apply.workable.com/api/v1/widget/accounts/fishingbooker?details=true",
+      "notes": "Implemented in internal/sources/fishingbooker.go (Workable widget API; 0 open jobs at time of implementation, 2026-09-17)."
+    },
+    {
+      "source": "galeyo",
+      "name": "Galeyo (formerly Walter Code)",
+      "website": "https://waltercode.com/",
+      "careers_url": "https://waltercode.com/careers/",
+      "ats": "custom-html",
+      "api_url": "https://www.galeyo.com/open-positions",
+      "notes": "Implemented in internal/sources/galeyo.go. waltercode.com redirects to galeyo.com; /open-positions is a server-rendered Webflow CMS list. icehr.walter.ba is a private HR login, not a board."
+    },
+    {
+      "source": "htec",
+      "name": "HTEC Group (Sarajevo)",
+      "website": "https://htec.com/",
+      "careers_url": "https://htec.com/careers/locations/sarajevo-bosnia-and-herzegovina/",
+      "ats": "talentlyft",
+      "api_url": "https://api.talentlyft.com/v2/public/htecgroup/jobs",
+      "notes": "Already implemented in internal/sources/htec.go"
+    },
+    {
+      "source": "infobip",
+      "name": "Infobip",
+      "website": "https://www.infobip.com/",
+      "careers_url": "https://infobip.wd3.myworkdayjobs.com/en-US/InfobipCareers",
+      "ats": "workday",
+      "api_url": "https://infobip.wd3.myworkdayjobs.com/wday/cxs/infobip/InfobipCareers/jobs",
+      "notes": "Already implemented in internal/sources/infobip.go"
+    },
+    {
+      "source": "jitasa",
+      "name": "Jitasa Group (Jitasa d.o.o. Sarajevo)",
+      "website": "https://www.jitasagroup.com/",
+      "careers_url": null,
+      "ats": "custom-html",
+      "api_url": "https://www.jitasagroup.com/about/careers/",
+      "notes": "Implemented in internal/sources/jitasa.go: careers page links each opening as a static PDF with a location span; scraped with regexp."
+    },
+    {
+      "source": "king-ict",
+      "name": "KING ICT",
+      "website": "https://king-ict.com/",
+      "careers_url": "https://king-ict.com/careers/",
+      "ats": "talentlyft",
+      "api_url": "https://api.talentlyft.com/v2/public/king-ict/jobs",
+      "notes": "Verified working endpoint, but current postings returned are for Serbia/Croatia offices, not confirmed to include Sarajevo/BH postings at time of check"
+    },
+    {
+      "source": "klika",
+      "name": "Klika",
+      "website": "https://www.klika.us",
+      "careers_url": "https://klika-doo-sarajevo.breezy.hr/",
+      "ats": "breezy",
+      "api_url": "https://klika-doo-sarajevo.breezy.hr/json",
+      "notes": "Career portal returns 404 \"Career portal not found\" as of this check — the breezy slug is stale/closed. Needs a fresh slug lookup (check klika.us site or LinkedIn for a current job-board link) before this endpoint is usable."
+    },
+    {
+      "source": "lanaco",
+      "name": "LANACO (Sarajevo office)",
+      "website": "https://www.lanaco.com/",
+      "careers_url": "https://www.lanaco.com/en/otvorene-pozicije",
+      "ats": "custom-html",
+      "api_url": "https://www.lanaco.com/en/otvorene-pozicije",
+      "notes": "Implemented in internal/sources/lanaco.go (server-rendered HTML scraped with regexp)."
+    },
+    {
+      "source": "linkgroup",
+      "name": "LINK group",
+      "website": null,
+      "careers_url": null,
+      "ats": "custom-html",
+      "api_url": "https://www.link-group.eu/currently-open-positions",
+      "notes": "Implemented in internal/sources/linkgroup.go. link.ba is dead; link-group.eu has one hand-maintained Drupal page listing openings per country (some link out to posao.ba)."
+    },
+    {
+      "source": "mistral",
+      "name": "Mistral (now part of HTEC)",
+      "website": "https://www.mistral.ba/",
+      "careers_url": "https://www.mistral.ba/careers/",
+      "ats": "talentlyft",
+      "api_url": "https://api.talentlyft.com/v2/public/mistral/jobs",
+      "notes": "Valid TalentLyft endpoint (own slug, separate from htecgroup), currently 0 open postings — endpoint structure confirmed working, just empty at time of check"
+    },
+    {
+      "source": "payoneer",
+      "name": "Payoneer",
+      "website": "https://www.payoneer.com/",
+      "careers_url": "https://careers.payoneer.com/",
+      "ats": "greenhouse",
+      "api_url": "https://boards-api.greenhouse.io/v1/boards/payoneer/jobs",
+      "notes": "Implemented in internal/sources/payoneer.go (Greenhouse boards-api, all global jobs, no location filter)."
+    },
+    {
+      "source": "qss",
+      "name": "QSS (Quality Software Solution)",
+      "website": "https://qss.ba/",
+      "careers_url": null,
+      "ats": "custom-html",
+      "api_url": "https://qss.ba/company/careers",
+      "notes": "Implemented in internal/sources/qss.go (Weblium server-rendered careers cards scraped with regexp; cards whose button links to / are unpublished and skipped)."
+    },
+    {
+      "source": "rubicon",
+      "name": "RUBICON",
+      "website": "https://www.rubicon-world.com",
+      "careers_url": "https://www.rubicon-world.com/careers",
+      "ats": "bamboohr",
+      "api_url": "https://rubicon.bamboohr.com/careers/list?version=2",
+      "notes": "Confirmed working; returns {meta:{totalCount}, result:[{id, jobOpeningName, location, ...}]}. BambooHR subdomain is \"rubicon\" (not \"rubicon-world\")"
+    },
+    {
+      "source": "symphony",
+      "name": "Symphony (Symphony Digital / Symphony Group Sarajevo)",
+      "website": "https://symphony.is/",
+      "careers_url": "https://symphony.breezy.hr/",
+      "ats": "breezy",
+      "api_url": "https://symphony.breezy.hr/json",
+      "notes": "Endpoint live and returns valid JSON (empty array at time of check, no open postings). Alt Lever link jobs.eu.lever.co/symphony did NOT resolve (api.lever.co/v0/postings/symphony returns \"Document not found\") — that slug/link is stale, use the Breezy one."
+    },
+    {
+      "source": "systemverification",
+      "name": "System Verification",
+      "website": "https://systemverification.com/",
+      "careers_url": "https://career.systemverification.com/",
+      "ats": "custom-html",
+      "api_url": "https://career.systemverification.com/",
+      "notes": "Implemented in internal/sources/systemverification.go (HubSpot blog-style listing scraped with regexp; Cloudflare 403s the default Go User-Agent, so a browser UA is sent)."
+    },
+    {
+      "source": "tacta",
+      "name": "Tacta",
+      "website": null,
+      "careers_url": null,
+      "ats": "talentlyft",
+      "api_url": "https://api.talentlyft.com/v2/public/tacta/jobs",
+      "notes": "Implemented in internal/sources/tacta.go (TalentLyft widget on tacta.io/careers; 0 open jobs at time of implementation, 2026-09-17)."
+    },
+    {
+      "source": "zendev",
+      "name": "ZenDev",
+      "website": "https://www.zendev.se/",
+      "careers_url": "https://www.zendev.se/career",
+      "ats": "talentlyft",
+      "api_url": "https://api.talentlyft.com/v2/public/zendev/jobs",
+      "notes": "Confirmed working, includes real postings tagged JobTags:[\"zendev\"] with City: Sarajevo, e.g. \"Freelance Developer\" and \"Medior Backend Engineer (C# .NET)\". Page also surfaces client ICA's own talentlyft board (talentlyft.com/ica) — that one belongs to ICA, not ZenDev, don't scrape it as ZenDev's."
+    },
+    {
+      "source": "zira",
+      "name": "ZIRA Group",
+      "website": "https://www.zira.com.ba/",
+      "careers_url": null,
+      "ats": "recruitee",
+      "api_url": "https://zira.recruitee.com/api/offers/",
+      "notes": "Implemented in internal/sources/zira.go. zira.com.ba redirects to ziragroup.com; careers/open-positions links to the Recruitee board zira.recruitee.com."
+    }
+  ],
+  "good": [
+    {
+      "name": "ReeInvent",
+      "website": "https://www.reeinvent.com/",
+      "careers_url": "https://www.reeinvent.com/reeinternship-2026",
+      "ats": "custom-html",
+      "api_url": "https://www.reeinvent.com/careers",
+      "notes": "Skipped 2026-09-17: HubSpot site with a server-rendered Open Roles module on /careers, but it shows no open roles, so card markup cannot be verified. Revisit when roles are posted."
+    },
+    {
+      "name": "SEEBA",
+      "website": "https://www.seeba.se",
+      "careers_url": null,
+      "ats": "wordpress-rest",
+      "api_url": "https://backend.seeba.se/wp-json/wp/v2/positions",
+      "notes": "Skipped 2026-09-17: headless WP positions endpoint exists but only holds two Open Application placeholders (sv/en) with no job data. Revisit if real positions appear there."
+    },
+    {
+      "name": "Smartlab",
+      "website": null,
+      "careers_url": null,
+      "ats": "strapi",
+      "api_url": "https://api.smartlab.ba/api/jobs",
+      "notes": "Skipped 2026-09-17: smartlab.ba careers is backed by a Strapi JSON API, but it only holds 2 stale postings from 2022 with deadlines in 2021. Revisit if the board gets updated."
+    }
+  ],
+  "blocked": [
+    {
+      "name": "TELUS Digital (Sarajevo office)",
+      "website": "https://www.telusdigital.com/",
+      "careers_url": "https://jobs.telusdigital.com/search/jobs/in/sarajevo",
+      "ats": "avature",
+      "api_url": null,
+      "notes": "Skipped: jobs.telusdigital.com is Avature SSR HTML, but every path returns a Cloudflare managed JS challenge (403) to non-browser clients; no JSON API behind it. Needs a headless browser."
+    }
+  ],
+  "bad": [
+    {
+      "name": "Agilitas",
+      "website": "https://www.agilitas.co.uk/",
+      "careers_url": null,
+      "ats": "unknown",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: agilitas.co.uk returns NXDOMAIN; agilitas.com is an unrelated retail brand; no verifiable careers page or ATS found."
+    },
+    {
+      "name": "Cron d.o.o.",
+      "website": "https://crondev.com",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: crondev.com is a parked GoDaddy for-sale domain; no live site or careers page."
+    },
+    {
+      "name": "DISTI",
+      "website": "https://disti.ba/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: disti.ba (WordPress) has no careers page (common paths 404, no job post type in wp-json), no ATS."
+    },
+    {
+      "name": "ECommerce d.o.o. (e-comm.ba)",
+      "website": "https://e-comm.ba/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: e-comm.ba is the BiH eCommerce Association WordPress site, not an employer; no careers/jobs page or ATS."
+    },
+    {
+      "name": "eMediaPatch (ePicentar d.o.o.)",
+      "website": "https://www.emediapatch.com/",
+      "careers_url": "https://www.emediapatch.com/general-hiring",
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: /general-hiring and /careers are a Wix send-your-CV form; no job list, ATS embed, or JSON endpoint."
+    },
+    {
+      "name": "FlyRank AI",
+      "website": "https://flyrank.com/",
+      "careers_url": "https://flyrank.com/pages/careers",
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped: /pages/careers is a static 'send us your story' page (careers@flyrank.com only); internship.flyrank.ai/bosnia-challenge is a one-off internship application, not a job board. No machine-readable listing."
+    },
+    {
+      "name": "GAUSS d.o.o.",
+      "website": "https://gauss.ba/en/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: gauss.ba (WordPress) has no careers page in nav, wp-json, or common paths; no ATS."
+    },
+    {
+      "name": "General IT & Software Solutions",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: BIT Alliance member page links to gene.ba (General Engineering d.o.o.), which has no careers page, ATS, or job endpoint; no other site found for GENE ITS."
+    },
+    {
+      "name": "IntergratingMe",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: site is https://integrating.me (Nuxt SPA, marketing/automation agency); no careers link and all common careers paths 404; no ATS."
+    },
+    {
+      "name": "INZA Group",
+      "website": "https://www.inzagroup.eu/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: inzagroup.eu (WordPress) has no careers page (/karijera, /careers, /posao, /jobs all 404), no job post type in wp-json, no ATS."
+    },
+    {
+      "name": "itMedia",
+      "website": "https://itmedia.io/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": "https://itmedia.io/company/careers/",
+      "notes": "Skipped 2026-09-17: Elementor careers page lists positions as static text with no per-job URLs, IDs or structured markup; just a Send-your-CV form."
+    },
+    {
+      "name": "Kodeks",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: site is kodeks.ba (WordPress, via bit-alliance.ba); no careers page (common paths 404), no job post type, no ATS."
+    },
+    {
+      "name": "Konica Minolta Poslovna Rjesenja BH",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: site is konicaminolta.ba/bs-ba (Next.js + Contentstack, via bit-alliance.ba); no careers/jobs link or ATS."
+    },
+    {
+      "name": "Lilium Digital (Lilium d.o.o.)",
+      "website": "https://lilium.ba/en/home",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: lilium.ba/en/career/ is a static Join-the-Team page with a CV upload form; no job list, ATS, or endpoint."
+    },
+    {
+      "name": "Logate",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: logate.com/career-jobs/ says it is under reconstruction and points to LinkedIn; no job list or ATS."
+    },
+    {
+      "name": "MAUS",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: site is maus.ba (Next.js agency site, via bit-alliance.ba); no careers/jobs page or link, only Instagram/LinkedIn."
+    },
+    {
+      "name": "medIT",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: site is medit.ba; /company/career is only an embedded Google Forms CV submission, no job list or endpoint."
+    },
+    {
+      "name": "Net Solution",
+      "website": "https://netsolution.ba/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: netsolution.ba (WordPress) has no careers page (common paths 404, no nav link); only a LinkedIn company page."
+    },
+    {
+      "name": "PING",
+      "website": "https://www.ping.ba/",
+      "careers_url": "https://www.ping.ba/en/careers/",
+      "ats": "wp-job-openings",
+      "api_url": "https://www.ping.ba/wp-json/wp/v2/awsm_job_openings?per_page=100",
+      "notes": "Skipped 2026-09-17: WP REST route works, but only lists evergreen General Application posts (EN/BA), and ping.ba serves an incomplete TLS chain (missing Let's Encrypt intermediate), so Go net/http fails with unknown authority. Revisit if they post real roles and fix TLS."
+    },
+    {
+      "name": "Saburly",
+      "website": "https://www.saburly.com/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: saburly.com does not resolve (NXDOMAIN); very small shop with no public job board found."
+    },
+    {
+      "name": "Scode",
+      "website": null,
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: site is scode.ba (via bit-alliance.ba); no careers page (common paths 404), no ATS."
+    },
+    {
+      "name": "Tech 387",
+      "website": "https://www.facebook.com/tech387/",
+      "careers_url": null,
+      "ats": "none",
+      "api_url": null,
+      "notes": "Skipped 2026-09-17: tech387.com (Webflow) has no careers/jobs page or ATS; only portfolio, blog and social links."
+    }
+  ]
+}
