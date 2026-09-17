@@ -12,12 +12,12 @@
   {
     "name": "AllOps Solutions",
     "careers_url": null,
-    "ats": "none",
-    "api_url": null,
-    "api_method": null,
+    "ats": "wordpress-rest",
+    "api_url": "https://allops.co/wp-json/wp/v2/job?per_page=100",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "Only a GitHub org and LinkedIn page found, no dedicated careers page/ATS"
+    "verified": true,
+    "notes": "Implemented in internal/sources/allops.go: WP REST 'job' post type for the list, plus each job page scraped for location."
   },
   {
     "name": "Alem Sistem",
