@@ -7,7 +7,7 @@
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No careers URL in source file; global agilitas.co.uk/careers found no ATS signature in raw HTML (likely JS-rendered)"
+    "notes": "Skipped 2026-09-17: agilitas.co.uk returns NXDOMAIN; agilitas.com is an unrelated retail brand; no verifiable careers page or ATS found."
   },
   {
     "name": "AllOps Solutions",
@@ -92,32 +92,32 @@
   {
     "name": "Cron d.o.o.",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No careers page found"
+    "notes": "Skipped 2026-09-17: crondev.com is a parked GoDaddy for-sale domain; no live site or careers page."
   },
   {
     "name": "DISTI",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No careers page found"
+    "notes": "Skipped 2026-09-17: disti.ba (WordPress) has no careers page (common paths 404, no job post type in wp-json), no ATS."
   },
   {
     "name": "eMediaPatch (ePicentar d.o.o.)",
     "careers_url": "https://www.emediapatch.com/general-hiring",
-    "ats": "custom-html",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No ATS signature found in static HTML; page reads like a general \"send your CV\" form, not a structured job board"
+    "notes": "Skipped 2026-09-17: /general-hiring and /careers are a Wix send-your-CV form; no job list, ATS embed, or JSON endpoint."
   },
   {
     "name": "ECommerce d.o.o. (e-comm.ba)",
@@ -127,7 +127,7 @@
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "Site is a BiH eCommerce industry association page, not a company job board"
+    "notes": "Skipped 2026-09-17: e-comm.ba is the BiH eCommerce Association WordPress site, not an employer; no careers/jobs page or ATS."
   },
   {
     "name": "ENIT d.o.o.",
@@ -152,12 +152,12 @@
   {
     "name": "FlyRank AI",
     "careers_url": "https://flyrank.com/pages/careers",
-    "ats": "custom-html",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "Shopify-style page (/pages/careers), no ATS signature detected; Sarajevo presence unverified per source file"
+    "notes": "Skipped: /pages/careers is a static 'send us your story' page (careers@flyrank.com only); internship.flyrank.ai/bosnia-challenge is a one-off internship application, not a job board. No machine-readable listing."
   },
   {
     "name": "Galeyo (formerly Walter Code)",
@@ -172,22 +172,22 @@
   {
     "name": "GAUSS d.o.o.",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No careers page found"
+    "notes": "Skipped 2026-09-17: gauss.ba (WordPress) has no careers page in nav, wp-json, or common paths; no ATS."
   },
   {
     "name": "General IT & Software Solutions",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: BIT Alliance member page links to gene.ba (General Engineering d.o.o.), which has no careers page, ATS, or job endpoint; no other site found for GENE ITS."
   },
   {
     "name": "HTEC Group (Sarajevo)",
@@ -212,12 +212,12 @@
   {
     "name": "IntergratingMe",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: site is https://integrating.me (Nuxt SPA, marketing/automation agency); no careers link and all common careers paths 404; no ATS."
   },
   {
     "name": "INZA Group",
@@ -227,7 +227,7 @@
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "Fire safety/engineering firm, not a software company; no ATS found"
+    "notes": "Skipped 2026-09-17: inzagroup.eu (WordPress) has no careers page (/karijera, /careers, /posao, /jobs all 404), no job post type in wp-json, no ATS."
   },
   {
     "name": "Jitasa Group (Jitasa d.o.o. Sarajevo)",
@@ -242,12 +242,12 @@
   {
     "name": "itMedia",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
+    "ats": "none",
+    "api_url": "https://itmedia.io/company/careers/",
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No careers page found"
+    "notes": "Skipped 2026-09-17: Elementor careers page lists positions as static text with no per-job URLs, IDs or structured markup; just a Send-your-CV form."
   },
   {
     "name": "KING ICT",
@@ -272,22 +272,22 @@
   {
     "name": "Kodeks",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: site is kodeks.ba (WordPress, via bit-alliance.ba); no careers page (common paths 404), no job post type, no ATS."
   },
   {
     "name": "Konica Minolta Poslovna Rjesenja BH",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: site is konicaminolta.ba/bs-ba (Next.js + Contentstack, via bit-alliance.ba); no careers/jobs link or ATS."
   },
   {
     "name": "LANACO (Sarajevo office)",
@@ -312,42 +312,42 @@
   {
     "name": "Lilium Digital (Lilium d.o.o.)",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No dedicated careers page found"
+    "notes": "Skipped 2026-09-17: lilium.ba/en/career/ is a static Join-the-Team page with a CV upload form; no job list, ATS, or endpoint."
   },
   {
     "name": "Logate",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: logate.com/career-jobs/ says it is under reconstruction and points to LinkedIn; no job list or ATS."
   },
   {
     "name": "MAUS",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: site is maus.ba (Next.js agency site, via bit-alliance.ba); no careers/jobs page or link, only Instagram/LinkedIn."
   },
   {
     "name": "medIT",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: site is medit.ba; /company/career is only an embedded Google Forms CV submission, no job list or endpoint."
   },
   {
     "name": "Mistral (now part of HTEC)",
@@ -362,12 +362,12 @@
   {
     "name": "Net Solution",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No careers page found"
+    "notes": "Skipped 2026-09-17: netsolution.ba (WordPress) has no careers page (common paths 404, no nav link); only a LinkedIn company page."
   },
   {
     "name": "Payoneer",
@@ -382,12 +382,12 @@
   {
     "name": "PING",
     "careers_url": "https://www.ping.ba/en/careers/",
-    "ats": "custom-html",
-    "api_url": null,
+    "ats": "wp-job-openings",
+    "api_url": "https://www.ping.ba/wp-json/wp/v2/awsm_job_openings?per_page=100",
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No ATS signature found in static HTML"
+    "notes": "Skipped 2026-09-17: WP REST route works, but only lists evergreen General Application posts (EN/BA), and ping.ba serves an incomplete TLS chain (missing Let's Encrypt intermediate), so Go net/http fails with unknown authority. Revisit if they post real roles and fix TLS."
   },
   {
     "name": "QSS (Quality Software Solution)",
@@ -403,11 +403,11 @@
     "name": "ReeInvent",
     "careers_url": "https://www.reeinvent.com/reeinternship-2026",
     "ats": "custom-html",
-    "api_url": null,
+    "api_url": "https://www.reeinvent.com/careers",
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "This is a one-off internship program landing page, not a structured job board"
+    "notes": "Skipped 2026-09-17: HubSpot site with a server-rendered Open Roles module on /careers, but it shows no open roles, so card markup cannot be verified. Revisit when roles are posted."
   },
   {
     "name": "RUBICON",
@@ -422,42 +422,42 @@
   {
     "name": "Saburly",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No ATS signature found on homepage; no dedicated careers page found"
+    "notes": "Skipped 2026-09-17: saburly.com does not resolve (NXDOMAIN); very small shop with no public job board found."
   },
   {
     "name": "Scode",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No website found"
+    "notes": "Skipped 2026-09-17: site is scode.ba (via bit-alliance.ba); no careers page (common paths 404), no ATS."
   },
   {
     "name": "SEEBA",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
+    "ats": "wordpress-rest",
+    "api_url": "https://backend.seeba.se/wp-json/wp/v2/positions",
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No ATS signature found on homepage; no dedicated careers page found"
+    "notes": "Skipped 2026-09-17: headless WP positions endpoint exists but only holds two Open Application placeholders (sv/en) with no job data. Revisit if real positions appear there."
   },
   {
     "name": "Smartlab",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
+    "ats": "strapi",
+    "api_url": "https://api.smartlab.ba/api/jobs",
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "LinkedIn presence only, no website found"
+    "notes": "Skipped 2026-09-17: smartlab.ba careers is backed by a Strapi JSON API, but it only holds 2 stale postings from 2022 with deadlines in 2021. Revisit if the board gets updated."
   },
   {
     "name": "Symphony (Symphony Digital / Symphony Group Sarajevo)",
@@ -492,22 +492,22 @@
   {
     "name": "Tech 387",
     "careers_url": null,
-    "ats": "unknown",
+    "ats": "none",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "Facebook page only; myworkdayjobs.com match on FB page fetch is a false positive (Facebook's own scripts)"
+    "notes": "Skipped 2026-09-17: tech387.com (Webflow) has no careers/jobs page or ATS; only portfolio, blog and social links."
   },
   {
     "name": "TELUS Digital (Sarajevo office)",
     "careers_url": "https://jobs.telusdigital.com/search/jobs/in/sarajevo",
-    "ats": "custom-html",
+    "ats": "avature",
     "api_url": null,
     "api_method": null,
     "request_body_example": null,
     "verified": false,
-    "notes": "No known ATS signature (phenompeople/smartrecruiters/taleo/workday/successfactors/icims) detected in static HTML; likely a proprietary or heavily JS-rendered board"
+    "notes": "Skipped: jobs.telusdigital.com is Avature SSR HTML, but every path returns a Cloudflare managed JS challenge (403) to non-browser clients; no JSON API behind it. Needs a headless browser."
   },
   {
     "name": "ZenDev",
