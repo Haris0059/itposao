@@ -482,12 +482,12 @@
   {
     "name": "Tacta",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
-    "api_method": null,
+    "ats": "talentlyft",
+    "api_url": "https://api.talentlyft.com/v2/public/tacta/jobs",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "No website found"
+    "verified": true,
+    "notes": "Implemented in internal/sources/tacta.go (TalentLyft widget on tacta.io/careers; 0 open jobs at time of implementation, 2026-09-17)."
   },
   {
     "name": "Tech 387",
