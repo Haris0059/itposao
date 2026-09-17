@@ -142,12 +142,12 @@
   {
     "name": "FishingBooker",
     "careers_url": "https://fishingbooker.com/careers",
-    "ats": "custom-html",
-    "api_url": null,
-    "api_method": null,
+    "ats": "workable",
+    "api_url": "https://apply.workable.com/api/v1/widget/accounts/fishingbooker?details=true",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "No ATS signature detected in static HTML (likely JS-rendered); HQ is Belgrade, Sarajevo presence unverified per source file"
+    "verified": true,
+    "notes": "Implemented in internal/sources/fishingbooker.go (Workable widget API; 0 open jobs at time of implementation, 2026-09-17)."
   },
   {
     "name": "FlyRank AI",

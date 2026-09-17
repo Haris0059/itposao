@@ -34,6 +34,7 @@ var companyTitle = map[string]string{
 	"cyberarrow":        "CyberArrow Technology",
 	"payoneer":          "Payoneer",
 	"lanaco":            "LANACO",
+	"fishingbooker":     "FishingBooker",
 }
 
 func main() {
@@ -75,6 +76,7 @@ func main() {
 		&sources.CyberArrow{},
 		&sources.Payoneer{},
 		&sources.Lanaco{},
+		&sources.FishingBooker{},
 	}
 
 	for _, src := range srcs {
