@@ -19,22 +19,23 @@ import (
 // companyTitle maps a source's Name() to the display name of the company
 // it fetches jobs for.
 var companyTitle = map[string]string{
-	"htec":              "HTEC Group",
-	"infobip":           "Infobip",
-	"atlantbh":          "Atlantbh",
-	"king-ict":          "KING ICT",
-	"mistral":           "Mistral",
-	"rubicon":           "RUBICON",
-	"symphony":          "Symphony",
-	"zendev":            "ZenDev",
-	"authoritypartners": "Authority Partners",
-	"capslock":          "CapsLock",
-	"comtrade":          "Comtrade System Integration",
-	"klika":             "Klika",
-	"cyberarrow":        "CyberArrow Technology",
-	"payoneer":          "Payoneer",
-	"lanaco":            "LANACO",
-	"fishingbooker":     "FishingBooker",
+	"htec":               "HTEC Group",
+	"infobip":            "Infobip",
+	"atlantbh":           "Atlantbh",
+	"king-ict":           "KING ICT",
+	"mistral":            "Mistral",
+	"rubicon":            "RUBICON",
+	"symphony":           "Symphony",
+	"zendev":             "ZenDev",
+	"authoritypartners":  "Authority Partners",
+	"capslock":           "CapsLock",
+	"comtrade":           "Comtrade System Integration",
+	"klika":              "Klika",
+	"cyberarrow":         "CyberArrow Technology",
+	"payoneer":           "Payoneer",
+	"lanaco":             "LANACO",
+	"fishingbooker":      "FishingBooker",
+	"systemverification": "System Verification",
 }
 
 func main() {
@@ -77,6 +78,7 @@ func main() {
 		&sources.Payoneer{},
 		&sources.Lanaco{},
 		&sources.FishingBooker{},
+		&sources.SystemVerification{},
 	}
 
 	for _, src := range srcs {

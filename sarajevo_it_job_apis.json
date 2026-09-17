@@ -473,11 +473,11 @@
     "name": "System Verification",
     "careers_url": "https://career.systemverification.com/",
     "ats": "custom-html",
-    "api_url": null,
-    "api_method": null,
+    "api_url": "https://career.systemverification.com/",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "No ATS signature found in static HTML"
+    "verified": true,
+    "notes": "Implemented in internal/sources/systemverification.go (HubSpot blog-style listing scraped with regexp; Cloudflare 403s the default Go User-Agent, so a browser UA is sent)."
   },
   {
     "name": "Tacta",
