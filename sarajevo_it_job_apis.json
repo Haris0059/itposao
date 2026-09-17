@@ -302,12 +302,12 @@
   {
     "name": "LINK group",
     "careers_url": null,
-    "ats": "unknown",
-    "api_url": null,
-    "api_method": null,
+    "ats": "custom-html",
+    "api_url": "https://www.link-group.eu/currently-open-positions",
+    "api_method": "GET",
     "request_body_example": null,
-    "verified": false,
-    "notes": "No website found"
+    "verified": true,
+    "notes": "Implemented in internal/sources/linkgroup.go. link.ba is dead; link-group.eu has one hand-maintained Drupal page listing openings per country (some link out to posao.ba)."
   },
   {
     "name": "Lilium Digital (Lilium d.o.o.)",
