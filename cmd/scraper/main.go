@@ -32,6 +32,7 @@ var companyTitle = map[string]string{
 	"comtrade":          "Comtrade System Integration",
 	"klika":             "Klika",
 	"cyberarrow":        "CyberArrow Technology",
+	"payoneer":          "Payoneer",
 }
 
 func main() {
@@ -71,6 +72,7 @@ func main() {
 		&sources.Comtrade{},
 		&sources.Klika{},
 		&sources.CyberArrow{},
+		&sources.Payoneer{},
 	}
 
 	for _, src := range srcs {

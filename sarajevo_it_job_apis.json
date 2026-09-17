@@ -377,7 +377,7 @@
     "api_method": "GET",
     "request_body_example": null,
     "verified": true,
-    "notes": "Confirmed Greenhouse board with real job data; source file flags Sarajevo presence as unverified/unlikely — postings would need filtering by location, may not include BiH at all"
+    "notes": "Implemented in internal/sources/payoneer.go (Greenhouse boards-api, all global jobs, no location filter)."
   },
   {
     "name": "PING",
