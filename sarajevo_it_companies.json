@@ -1,11 +1,5 @@
 [
   {
-    "name": "Agilitas",
-    "website": "https://www.agilitas.co.uk/",
-    "careers_url": null,
-    "notes": "BIT Alliance member, Sarajevo office at Jadranska 8; found only UK/global agilitas.com/agilitas.co.uk careers pages, no confirmed Sarajevo-specific careers URL"
-  },
-  {
     "name": "AllOps Solutions",
     "website": "https://github.com/allops-solutions",
     "careers_url": null,
@@ -56,32 +50,6 @@
     "source": "user-provided internship program list"
   },
   {
-    "name": "Cron d.o.o.",
-    "website": "https://crondev.com",
-    "careers_url": null,
-    "notes": "Small custom software dev firm, Sarajevo; careers path unconfirmed"
-  },
-  {
-    "name": "DISTI",
-    "website": "https://disti.ba/",
-    "careers_url": null,
-    "notes": "BIT Alliance member, systems integrator, Sarajevo; no dedicated careers page found"
-  },
-  {
-    "name": "eMediaPatch (ePicentar d.o.o.)",
-    "website": "https://www.emediapatch.com/",
-    "careers_url": "https://www.emediapatch.com/general-hiring",
-    "notes": "Digital marketing/consulting, confirmed Sarajevo presence via Glassdoor reviews (mail info@emediapatch.com)",
-    "source": "user-provided internship program list"
-  },
-  {
-    "name": "ECommerce d.o.o. (e-comm.ba)",
-    "website": "https://e-comm.ba/",
-    "careers_url": null,
-    "notes": "Site resolves to the BiH eCommerce Association, not a clear standalone software company; no careers page found, Sarajevo presence unconfirmed as a distinct employer (mail orhan@e-comm.ba)",
-    "source": "user-provided internship program list"
-  },
-  {
     "name": "ENIT d.o.o.",
     "website": "https://www.facebook.com/enitcompany/",
     "careers_url": null,
@@ -96,30 +64,10 @@
     "source": "user-provided internship program list"
   },
   {
-    "name": "FlyRank AI",
-    "website": "https://flyrank.com/",
-    "careers_url": "https://flyrank.com/pages/careers",
-    "notes": "Runs a Bosnia-focused internship (internship.flyrank.ai/bosnia-challenge) suggesting Sarajevo activity, but no confirmed physical Sarajevo office — location unverified",
-    "source": "user-provided internship program list"
-  },
-  {
     "name": "Galeyo (formerly Walter Code)",
     "website": "https://waltercode.com/",
     "careers_url": "https://waltercode.com/careers/",
     "notes": "BIT Alliance member (listed as Galeyo/Walter Code); ATS at https://icehr.walter.ba/"
-  },
-  {
-    "name": "GAUSS d.o.o.",
-    "website": "https://gauss.ba/en/",
-    "careers_url": null,
-    "notes": "GeoInformation solutions company, confirmed Sarajevo address (Marsala Tita 7); no careers page found (mail mirza.ponjavic@ibu.edu.ba)",
-    "source": "user-provided internship program list"
-  },
-  {
-    "name": "General IT & Software Solutions",
-    "website": null,
-    "careers_url": null,
-    "notes": "BIT Alliance member; no website/careers page found via search, needs direct lookup"
   },
   {
     "name": "HTEC Group (Sarajevo)",
@@ -134,30 +82,11 @@
     "notes": "Already implemented in this repo's scraper (internal/sources/infobip.go); Workday ATS notification mail infobip@myworkday.com"
   },
   {
-    "name": "IntergratingMe",
-    "website": null,
-    "careers_url": null,
-    "notes": "BIT Alliance member; no website/careers found via search"
-  },
-  {
-    "name": "INZA Group",
-    "website": "https://www.inzagroup.eu/",
-    "careers_url": null,
-    "notes": "Fire safety/risk management engineering group with Sarajevo institute (~50 staff), not primarily a software/IT company; no careers page found (mail info@inzagroup.eu)",
-    "source": "user-provided internship program list"
-  },
-  {
     "name": "Jitasa Group (Jitasa d.o.o. Sarajevo)",
     "website": "https://www.jitasagroup.com/",
     "careers_url": null,
     "notes": "BPO for bookkeeping/accounting/data entry (parent: Jitasa/Easy Office Inc.), confirmed 100+ person Sarajevo office; hiring announced via Facebook, no standalone careers URL found (mail bootcamp@jitasagroup.com)",
     "source": "user-provided internship program list"
-  },
-  {
-    "name": "itMedia",
-    "website": "https://itmedia.io/",
-    "careers_url": null,
-    "notes": "BIT Alliance member; HQ actually Bijeljina per Clutch, not confirmed Sarajevo office"
   },
   {
     "name": "KING ICT",
@@ -172,18 +101,6 @@
     "notes": "BIT Alliance member; Breezy ATS; company mail info@klika.us"
   },
   {
-    "name": "Kodeks",
-    "website": null,
-    "careers_url": null,
-    "notes": "BIT Alliance member, IT/telecom solutions, Sarajevo; no careers page found"
-  },
-  {
-    "name": "Konica Minolta Poslovna Rjesenja BH",
-    "website": null,
-    "careers_url": null,
-    "notes": "BIT Alliance member; local BH subsidiary, no dedicated careers URL found"
-  },
-  {
     "name": "LANACO (Sarajevo office)",
     "website": "https://www.lanaco.com/",
     "careers_url": "https://www.lanaco.com/en/otvorene-pozicije",
@@ -196,41 +113,10 @@
     "notes": "BIT Alliance member, IT education/certification; no careers URL confirmed"
   },
   {
-    "name": "Lilium Digital (Lilium d.o.o.)",
-    "website": "https://lilium.ba/en/home",
-    "careers_url": null,
-    "notes": "Digital marketing agency, confirmed Sarajevo address (Generala Mehmeda Alagica 6); no dedicated careers page found, LinkedIn shows occasional job posts (mail edin@lilium.ba). Note: lilium.com/careers is an unrelated aircraft company, not this Lilium",
-    "source": "user-provided internship program list"
-  },
-  {
-    "name": "Logate",
-    "website": null,
-    "careers_url": null,
-    "notes": "Sarajevo software dev company identified by name only, no working site/careers URL found in searches"
-  },
-  {
-    "name": "MAUS",
-    "website": null,
-    "careers_url": null,
-    "notes": "BIT Alliance member; no website/careers found"
-  },
-  {
-    "name": "medIT",
-    "website": null,
-    "careers_url": null,
-    "notes": "BIT Alliance member, healthcare/medical informatics, Sarajevo; no careers page found"
-  },
-  {
     "name": "Mistral (now part of HTEC)",
     "website": "https://www.mistral.ba/",
     "careers_url": "https://www.mistral.ba/careers/",
     "notes": "Acquired by HTEC in 2022; BIT Alliance profile page redirects to Mistral"
-  },
-  {
-    "name": "Net Solution",
-    "website": "https://netsolution.ba/",
-    "careers_url": null,
-    "notes": "BIT Alliance member, media systems integration/telecom, Sarajevo; no careers page found"
   },
   {
     "name": "Payoneer",
@@ -238,12 +124,6 @@
     "careers_url": "https://careers.payoneer.com/",
     "notes": "Global payment platform; found only an Employer-of-Record guide for BiH, no evidence of an actual Payoneer office/team in Sarajevo — location unverified, likely not a real Sarajevo employer",
     "source": "user-provided internship program list"
-  },
-  {
-    "name": "PING",
-    "website": "https://www.ping.ba/",
-    "careers_url": "https://www.ping.ba/en/careers/",
-    "notes": "BIT Alliance member, 25+ years in Sarajevo"
   },
   {
     "name": "QSS (Quality Software Solution)",
@@ -263,18 +143,6 @@
     "website": "https://www.rubicon-world.com",
     "careers_url": "https://www.rubicon-world.com/careers",
     "notes": "BIT Alliance member, Sarajevo, ~30 people"
-  },
-  {
-    "name": "Saburly",
-    "website": "https://www.saburly.com/",
-    "careers_url": null,
-    "notes": "Sarajevo software dev firm; careers path unconfirmed"
-  },
-  {
-    "name": "Scode",
-    "website": null,
-    "careers_url": null,
-    "notes": "BIT Alliance member; no website/careers found"
   },
   {
     "name": "SEEBA",
@@ -305,12 +173,6 @@
     "website": null,
     "careers_url": null,
     "notes": "BIT Alliance member; no website/careers found"
-  },
-  {
-    "name": "Tech 387",
-    "website": "https://www.facebook.com/tech387/",
-    "careers_url": null,
-    "notes": "Startup studio/venture builder, Sarajevo; no dedicated site/careers URL found, Facebook page only"
   },
   {
     "name": "TELUS Digital (Sarajevo office)",
