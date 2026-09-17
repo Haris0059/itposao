@@ -7,17 +7,19 @@
   body { font-family: sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
   li { margin-bottom: 0.75rem; }
   .company { color: #666; }
-  #controls { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-  #search { flex: 1; padding: 0.4rem; }
-  #companyFilter { padding: 0.4rem; }
+  #search { width: 100%; padding: 0.4rem; margin-bottom: 0.5rem; box-sizing: border-box; }
+  #filters { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  #filters select { flex: 1; min-width: 0; padding: 0.4rem; }
 </style>
 </head>
 <body>
 <h1>itposao jobs (dev viewer)</h1>
-<div id="controls">
-  <input id="search" type="search" placeholder="Search title or location…">
+<input id="search" type="search" placeholder="Search title or location…">
+<div id="filters">
   <select id="companyFilter"><option value="">All companies</option></select>
   <select id="locationFilter"><option value="">All countries</option></select>
+  <select id="positionFilter"><option value="">All positions</option></select>
+  <select id="seniorityFilter"><option value="">All levels</option></select>
 </div>
 <ul id="jobs">Loading…</ul>
 
@@ -68,14 +70,59 @@ function locationIsCountry(location, countryName) {
   return false;
 }
 
+// Job title -> broad discipline, first matching rule wins. Titles are messy
+// (bilingual, freeform), so this covers what's actually in the dataset
+// rather than attempting an exhaustive taxonomy.
+// ponytail: keyword heuristic, misclassifies odd titles (e.g. "Data & AI
+// Architect" lands in Engineering, not Data & AI) — good enough until a
+// wrong bucket actually bothers someone.
+const POSITION_RULES = [
+  [/solution engineer/i, 'Solutions Engineering'],
+  [/\btester\b|test automation|\bqa\b/i, 'QA & Testing'],
+  [/\bdata (engineer|architect|scientist)\b|\bai (engineer|inference|compiler)\b|forward deployed ai/i, 'Data & AI'],
+  [/engineer|developer|architect|devops|\bsre\b|compiler|robotic|embedded|guidewire|administrator/i, 'Engineering'],
+  [/product manager|program manager/i, 'Product & Program Management'],
+  [/account executive|account manager|account head|\bsales\b|partnership|business development|customer growth|relationship manager|channel account|telecom account|wholesale|key account/i, 'Sales & Business Development'],
+  [/customer success|customer support|customer operations|technician/i, 'Customer Success & Support'],
+  [/marketing|content marketing|social media|digital advertising|demand generation/i, 'Marketing'],
+  [/talent acquisition|people operations|executive assistant|office assistant/i, 'HR & People'],
+  [/\bfinance\b|financial|legal|invoicing/i, 'Finance & Legal'],
+];
+function classifyPosition(title) {
+  for (const [re, label] of POSITION_RULES) {
+    if (re.test(title)) return label;
+  }
+  return 'Other';
+}
+
+// Seniority keywords a title can match; a title can match more than one
+// (e.g. "Junior/Mid Backend Engineer"). "Mid" excludes "Mid Market"/
+// "Mid-Market", which is a sales segment, not a seniority level.
+const SENIORITY_ORDER = ['Internship', 'Junior', 'Medior', 'Senior', 'Lead/Principal', 'Unspecified'];
+const SENIORITY_RULES = [
+  [/\bintern(ship)?s?\b/i, 'Internship'],
+  [/\bjunior\b/i, 'Junior'],
+  [/\bmedior\b|\bmid\b(?!\s*-?\s*market)/i, 'Medior'],
+  [/\bsenior\b/i, 'Senior'],
+  [/\blead\b|\bprincipal\b|\bprinciple\b/i, 'Lead/Principal'],
+];
+function classifySeniority(title) {
+  const levels = SENIORITY_RULES.filter(([re]) => re.test(title)).map(([, label]) => label);
+  return levels.length ? levels : ['Unspecified'];
+}
+
 function render() {
   const q = document.getElementById('search').value.trim().toLowerCase();
   const companyID = document.getElementById('companyFilter').value;
   const location = document.getElementById('locationFilter').value;
+  const position = document.getElementById('positionFilter').value;
+  const seniority = document.getElementById('seniorityFilter').value;
 
   const filtered = jobs.filter(j => {
     if (companyID && String(j.CompanyID) !== companyID) return false;
     if (location && !locationIsCountry(j.Location, location)) return false;
+    if (position && classifyPosition(j.Title) !== position) return false;
+    if (seniority && !classifySeniority(j.Title).includes(seniority)) return false;
     if (!q) return true;
     const haystack = `${j.Title} ${j.Location} ${companyTitle[j.CompanyID] ?? ''}`.toLowerCase();
     return haystack.includes(q);
@@ -118,9 +165,29 @@ async function load() {
     locationSelect.appendChild(opt);
   }
 
+  const positions = new Set(jobs.map(j => classifyPosition(j.Title)));
+  const positionSelect = document.getElementById('positionFilter');
+  for (const p of [...positions].sort()) {
+    const opt = document.createElement('option');
+    opt.value = p;
+    opt.textContent = p;
+    positionSelect.appendChild(opt);
+  }
+
+  const seniorities = new Set(jobs.flatMap(j => classifySeniority(j.Title)));
+  const senioritySelect = document.getElementById('seniorityFilter');
+  for (const s of SENIORITY_ORDER.filter(s => seniorities.has(s))) {
+    const opt = document.createElement('option');
+    opt.value = s;
+    opt.textContent = s;
+    senioritySelect.appendChild(opt);
+  }
+
   document.getElementById('search').addEventListener('input', render);
   select.addEventListener('change', render);
   locationSelect.addEventListener('change', render);
+  positionSelect.addEventListener('change', render);
+  senioritySelect.addEventListener('change', render);
   render();
 }
 load();
