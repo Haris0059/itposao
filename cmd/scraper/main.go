@@ -48,6 +48,12 @@ func main() {
 	srcs := []sources.Source{
 		&sources.HTEC{},
 		&sources.Infobip{},
+		&sources.Atlantbh{},
+		&sources.KingICT{},
+		&sources.Mistral{},
+		&sources.Rubicon{},
+		&sources.Symphony{},
+		&sources.ZenDev{},
 	}
 
 	for _, src := range srcs {

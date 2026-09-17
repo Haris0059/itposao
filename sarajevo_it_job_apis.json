@@ -1,0 +1,532 @@
+[
+  {
+    "name": "Agilitas",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No careers URL in source file; global agilitas.co.uk/careers found no ATS signature in raw HTML (likely JS-rendered)"
+  },
+  {
+    "name": "AllOps Solutions",
+    "careers_url": null,
+    "ats": "none",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Only a GitHub org and LinkedIn page found, no dedicated careers page/ATS"
+  },
+  {
+    "name": "Alem Sistem",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Homepage has no detectable ATS signature; no careers page found"
+  },
+  {
+    "name": "Asseco SEE BH",
+    "careers_url": "https://asseco.com/career/",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Fetched page has no known ATS signature in static HTML; likely a JS-rendered custom board, not verified"
+  },
+  {
+    "name": "Atlantbh",
+    "careers_url": "https://atlantbh.com/jobs/",
+    "ats": "workable",
+    "api_url": "https://apply.workable.com/api/v1/widget/accounts/atlantbh?details=true",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Confirmed: page embeds workable.com/atlantbh job links; public widget API returns full job data (title, description, department, etc.)"
+  },
+  {
+    "name": "Authority Partners",
+    "careers_url": "https://authoritypartnersinc.catsone.com/careers/",
+    "ats": "catsone",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Confirmed CATS ATS (catsone.com), client_id=86212, but portal is a client-rendered Remix/React app — no JSON endpoint found from static fetch (tried /jobs, .json, /jobs.json, ?client_id=, /api/v1/careers/<id>, all returned HTML shell). Would need a headless browser or CATS API key to scrape."
+  },
+  {
+    "name": "CapsLock",
+    "careers_url": "https://capslock.global/careers/",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found in static HTML"
+  },
+  {
+    "name": "Comtrade System Integration Sarajevo",
+    "careers_url": "https://www.comtrade.com/jobs/",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found in static HTML; group-level page, likely JS-rendered"
+  },
+  {
+    "name": "CyberArrow Technology",
+    "careers_url": "https://www.cyberarrow.io/careers/",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found in static HTML"
+  },
+  {
+    "name": "Cron d.o.o.",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No careers page found"
+  },
+  {
+    "name": "DISTI",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No careers page found"
+  },
+  {
+    "name": "eMediaPatch (ePicentar d.o.o.)",
+    "careers_url": "https://www.emediapatch.com/general-hiring",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found in static HTML; page reads like a general \"send your CV\" form, not a structured job board"
+  },
+  {
+    "name": "ECommerce d.o.o. (e-comm.ba)",
+    "careers_url": null,
+    "ats": "none",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Site is a BiH eCommerce industry association page, not a company job board"
+  },
+  {
+    "name": "ENIT d.o.o.",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Facebook page only, no dedicated site/ATS; myworkdayjobs.com match on FB page fetch is a false positive (Facebook's own scripts)"
+  },
+  {
+    "name": "FishingBooker",
+    "careers_url": "https://fishingbooker.com/careers",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature detected in static HTML (likely JS-rendered); HQ is Belgrade, Sarajevo presence unverified per source file"
+  },
+  {
+    "name": "FlyRank AI",
+    "careers_url": "https://flyrank.com/pages/careers",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Shopify-style page (/pages/careers), no ATS signature detected; Sarajevo presence unverified per source file"
+  },
+  {
+    "name": "Galeyo (formerly Walter Code)",
+    "careers_url": "https://waltercode.com/careers/",
+    "ats": "custom",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Source notes an in-house ATS at icehr.walter.ba; no signature confirmed in this pass, needs direct inspection of that subdomain"
+  },
+  {
+    "name": "GAUSS d.o.o.",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No careers page found"
+  },
+  {
+    "name": "General IT & Software Solutions",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "HTEC Group (Sarajevo)",
+    "careers_url": "https://htec.com/careers/locations/sarajevo-bosnia-and-herzegovina/",
+    "ats": "talentlyft",
+    "api_url": "https://api.talentlyft.com/v2/public/htecgroup/jobs",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Already implemented in internal/sources/htec.go"
+  },
+  {
+    "name": "Infobip",
+    "careers_url": "https://infobip.wd3.myworkdayjobs.com/en-US/InfobipCareers",
+    "ats": "workday",
+    "api_url": "https://infobip.wd3.myworkdayjobs.com/wday/cxs/infobip/InfobipCareers/jobs",
+    "api_method": "POST",
+    "request_body_example": "{\"appliedFacets\":{},\"limit\":20,\"offset\":0,\"searchText\":\"\"}",
+    "verified": true,
+    "notes": "Already implemented in internal/sources/infobip.go"
+  },
+  {
+    "name": "IntergratingMe",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "INZA Group",
+    "careers_url": null,
+    "ats": "none",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Fire safety/engineering firm, not a software company; no ATS found"
+  },
+  {
+    "name": "Jitasa Group (Jitasa d.o.o. Sarajevo)",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No careers page found; hiring announced via Facebook only"
+  },
+  {
+    "name": "itMedia",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No careers page found"
+  },
+  {
+    "name": "KING ICT",
+    "careers_url": "https://king-ict.com/careers/",
+    "ats": "talentlyft",
+    "api_url": "https://api.talentlyft.com/v2/public/king-ict/jobs",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Verified working endpoint, but current postings returned are for Serbia/Croatia offices, not confirmed to include Sarajevo/BH postings at time of check"
+  },
+  {
+    "name": "Klika",
+    "careers_url": "https://klika-doo-sarajevo.breezy.hr/",
+    "ats": "breezy",
+    "api_url": "https://klika-doo-sarajevo.breezy.hr/json",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Career portal returns 404 \"Career portal not found\" as of this check — the breezy slug is stale/closed. Needs a fresh slug lookup (check klika.us site or LinkedIn for a current job-board link) before this endpoint is usable."
+  },
+  {
+    "name": "Kodeks",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "Konica Minolta Poslovna Rjesenja BH",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "LANACO (Sarajevo office)",
+    "careers_url": "https://www.lanaco.com/en/otvorene-pozicije",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found in static HTML"
+  },
+  {
+    "name": "LINK group",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "Lilium Digital (Lilium d.o.o.)",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No dedicated careers page found"
+  },
+  {
+    "name": "Logate",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "MAUS",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "medIT",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "Mistral (now part of HTEC)",
+    "careers_url": "https://www.mistral.ba/careers/",
+    "ats": "talentlyft",
+    "api_url": "https://api.talentlyft.com/v2/public/mistral/jobs",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Valid TalentLyft endpoint (own slug, separate from htecgroup), currently 0 open postings — endpoint structure confirmed working, just empty at time of check"
+  },
+  {
+    "name": "Net Solution",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No careers page found"
+  },
+  {
+    "name": "Payoneer",
+    "careers_url": "https://careers.payoneer.com/",
+    "ats": "greenhouse",
+    "api_url": "https://boards-api.greenhouse.io/v1/boards/payoneer/jobs",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Confirmed Greenhouse board with real job data; source file flags Sarajevo presence as unverified/unlikely — postings would need filtering by location, may not include BiH at all"
+  },
+  {
+    "name": "PING",
+    "careers_url": "https://www.ping.ba/en/careers/",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found in static HTML"
+  },
+  {
+    "name": "QSS (Quality Software Solution)",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found on homepage; no dedicated careers page found"
+  },
+  {
+    "name": "ReeInvent",
+    "careers_url": "https://www.reeinvent.com/reeinternship-2026",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "This is a one-off internship program landing page, not a structured job board"
+  },
+  {
+    "name": "RUBICON",
+    "careers_url": "https://www.rubicon-world.com/careers",
+    "ats": "bamboohr",
+    "api_url": "https://rubicon.bamboohr.com/careers/list?version=2",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Confirmed working; returns {meta:{totalCount}, result:[{id, jobOpeningName, location, ...}]}. BambooHR subdomain is \"rubicon\" (not \"rubicon-world\")"
+  },
+  {
+    "name": "Saburly",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found on homepage; no dedicated careers page found"
+  },
+  {
+    "name": "Scode",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "SEEBA",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found on homepage; no dedicated careers page found"
+  },
+  {
+    "name": "Smartlab",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "LinkedIn presence only, no website found"
+  },
+  {
+    "name": "Symphony (Symphony Digital / Symphony Group Sarajevo)",
+    "careers_url": "https://symphony.breezy.hr/",
+    "ats": "breezy",
+    "api_url": "https://symphony.breezy.hr/json",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Endpoint live and returns valid JSON (empty array at time of check, no open postings). Alt Lever link jobs.eu.lever.co/symphony did NOT resolve (api.lever.co/v0/postings/symphony returns \"Document not found\") — that slug/link is stale, use the Breezy one."
+  },
+  {
+    "name": "System Verification",
+    "careers_url": "https://career.systemverification.com/",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found in static HTML"
+  },
+  {
+    "name": "Tacta",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No website found"
+  },
+  {
+    "name": "Tech 387",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "Facebook page only; myworkdayjobs.com match on FB page fetch is a false positive (Facebook's own scripts)"
+  },
+  {
+    "name": "TELUS Digital (Sarajevo office)",
+    "careers_url": "https://jobs.telusdigital.com/search/jobs/in/sarajevo",
+    "ats": "custom-html",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No known ATS signature (phenompeople/smartrecruiters/taleo/workday/successfactors/icims) detected in static HTML; likely a proprietary or heavily JS-rendered board"
+  },
+  {
+    "name": "ZenDev",
+    "careers_url": "https://www.zendev.se/career",
+    "ats": "talentlyft",
+    "api_url": "https://api.talentlyft.com/v2/public/zendev/jobs",
+    "api_method": "GET",
+    "request_body_example": null,
+    "verified": true,
+    "notes": "Confirmed working, includes real postings tagged JobTags:[\"zendev\"] with City: Sarajevo, e.g. \"Freelance Developer\" and \"Medior Backend Engineer (C# .NET)\". Page also surfaces client ICA's own talentlyft board (talentlyft.com/ica) — that one belongs to ICA, not ZenDev, don't scrape it as ZenDev's."
+  },
+  {
+    "name": "ZIRA Group",
+    "careers_url": null,
+    "ats": "unknown",
+    "api_url": null,
+    "api_method": null,
+    "request_body_example": null,
+    "verified": false,
+    "notes": "No ATS signature found on homepage; no dedicated careers page found"
+  }
+]
