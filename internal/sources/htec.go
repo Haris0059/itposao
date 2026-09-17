@@ -46,7 +46,7 @@ func (h *HTEC) Fetch(ctx context.Context) ([]*models.Job, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("htec: unexpected status %s", resp.Status)

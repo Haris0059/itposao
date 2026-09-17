@@ -97,7 +97,7 @@ func (i *Infobip) fetchPage(ctx context.Context, client *http.Client, offset int
 	if err != nil {
 		return nil, 0, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, 0, fmt.Errorf("infobip: unexpected status %s", resp.Status)
