@@ -24,12 +24,13 @@ type cyberarrowResponse struct {
 }
 
 type cyberarrowJob struct {
-	ID         int64  `json:"id"`
-	Title      string `json:"title"`
-	Location   string `json:"location"`
-	City       string `json:"city"`
-	Country    string `json:"country"`
-	CareersURL string `json:"careers_url"`
+	ID          int64  `json:"id"`
+	Title       string `json:"title"`
+	Location    string `json:"location"`
+	City        string `json:"city"`
+	Country     string `json:"country"`
+	CareersURL  string `json:"careers_url"`
+	Description string `json:"description"`
 }
 
 func (c *CyberArrow) Fetch(ctx context.Context) ([]*models.Job, error) {
@@ -72,11 +73,12 @@ func (c *CyberArrow) Fetch(ctx context.Context) ([]*models.Job, error) {
 		}
 
 		jobs = append(jobs, &models.Job{
-			ExternalID: strconv.FormatInt(o.ID, 10),
-			Title:      o.Title,
-			Location:   location,
-			URL:        o.CareersURL,
-			Source:     c.Name(),
+			ExternalID:  strconv.FormatInt(o.ID, 10),
+			Title:       o.Title,
+			Location:    location,
+			URL:         o.CareersURL,
+			Description: o.Description,
+			Source:      c.Name(),
 		})
 	}
 	return jobs, nil

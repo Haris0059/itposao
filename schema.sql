@@ -25,5 +25,8 @@ CREATE TABLE IF NOT EXISTS jobs (
     posted_at   TIMESTAMPTZ,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     closed_at   TIMESTAMPTZ,
+    description TEXT NOT NULL DEFAULT '', -- HTML from the source, may be empty
     UNIQUE (source, external_id)
 );
+
+ALTER TABLE jobs ADD COLUMN IF NOT EXISTS description TEXT NOT NULL DEFAULT '';

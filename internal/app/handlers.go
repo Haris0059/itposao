@@ -2,7 +2,11 @@ package app
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+	"strconv"
+
+	"itposao/internal/models"
 )
 
 func writeJSON(w http.ResponseWriter, status int, data any) {
@@ -58,4 +62,29 @@ func (app *Application) HandleCountries(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	writeJSON(w, http.StatusOK, countries)
+}
+
+func (app *Application) HandleJob(w http.ResponseWriter, r *http.Request) {
+	if app.Jobs == nil {
+		http.Error(w, "database not configured", http.StatusServiceUnavailable)
+		return
+	}
+
+	id, err := strconv.ParseInt(r.PathValue("id"), 10, 64)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	job, err := app.Jobs.Get(r.Context(), id)
+	if errors.Is(err, models.ErrNoRecord) {
+		http.NotFound(w, r)
+		return
+	}
+	if err != nil {
+		app.Logger.Error("get job failed", "error", err)
+		http.Error(w, "internal error", http.StatusInternalServerError)
+		return
+	}
+	writeJSON(w, http.StatusOK, job)
 }

@@ -14,6 +14,7 @@ Aggregates IT job postings from Sarajevo/regional company career pages into one 
 
 - `GET /v1/health` — liveness check.
 - `GET /v1/jobs` — open job postings.
+- `GET /v1/jobs/{id}` — one job, including its `Description` (HTML, may be empty).
 - `GET /v1/companies` — companies with jobs.
 - `GET /v1/countries` — reference list of countries, used to classify job locations.
 
@@ -43,6 +44,17 @@ curl http://localhost:8080/v1/health
 **Response** `200 OK`, plain text
 ```
 ok
+```
+
+---
+
+### GET /v1/jobs/{id}
+
+One job with its `Description` (source-provided HTML; empty string if the source doesn't expose one). Same fields as `GET /v1/jobs` plus `Description`. `404` if the ID doesn't exist.
+
+**Request**
+```bash
+curl http://localhost:8080/v1/jobs/42
 ```
 
 ---

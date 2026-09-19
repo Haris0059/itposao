@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"html"
 	"net/http"
 	"strconv"
 	"time"
@@ -11,7 +12,7 @@ import (
 	"itposao/internal/models"
 )
 
-const payoneerJobsURL = "https://boards-api.greenhouse.io/v1/boards/payoneer/jobs"
+const payoneerJobsURL = "https://boards-api.greenhouse.io/v1/boards/payoneer/jobs?content=true"
 
 // Payoneer fetches job listings from Payoneer's Greenhouse board API.
 type Payoneer struct {
@@ -29,6 +30,7 @@ type payoneerJob struct {
 	Title          string `json:"title"`
 	AbsoluteURL    string `json:"absolute_url"`
 	FirstPublished string `json:"first_published"`
+	Content        string `json:"content"` // HTML, entity-escaped by Greenhouse
 	Location       struct {
 		Name string `json:"name"`
 	} `json:"location"`
@@ -63,11 +65,12 @@ func (p *Payoneer) Fetch(ctx context.Context) ([]*models.Job, error) {
 	jobs := make([]*models.Job, 0, len(body.Jobs))
 	for _, j := range body.Jobs {
 		job := &models.Job{
-			ExternalID: strconv.FormatInt(j.ID, 10),
-			Title:      j.Title,
-			Location:   j.Location.Name,
-			URL:        j.AbsoluteURL,
-			Source:     p.Name(),
+			ExternalID:  strconv.FormatInt(j.ID, 10),
+			Title:       j.Title,
+			Location:    j.Location.Name,
+			URL:         j.AbsoluteURL,
+			Description: html.UnescapeString(j.Content),
+			Source:      p.Name(),
 		}
 		if t, err := time.Parse(time.RFC3339, j.FirstPublished); err == nil {
 			job.PostedAt = t

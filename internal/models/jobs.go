@@ -27,6 +27,9 @@ type Job struct {
 	PostedAt   time.Time
 	CreatedAt  time.Time
 	ClosedAt   *time.Time
+	// Description is source-provided HTML; empty when the source has none.
+	// Only populated by Get, not Latest, to keep the list payload small.
+	Description string
 }
 
 // JobModel wraps a pgx pool with the queries needed for jobs.
@@ -55,20 +58,21 @@ func (m *JobModel) Insert(ctx context.Context, j *Job) (int64, error) {
 // already existed (matched by source + external_id) and had been closed.
 func (m *JobModel) Upsert(ctx context.Context, j *Job) (int64, error) {
 	const q = `
-		INSERT INTO jobs (external_id, company_id, title, location, url, source, status, posted_at, created_at)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now())
+		INSERT INTO jobs (external_id, company_id, title, location, url, source, status, posted_at, created_at, description)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now(), $9)
 		ON CONFLICT (source, external_id) DO UPDATE SET
 			company_id = excluded.company_id,
 			title = excluded.title,
 			location = excluded.location,
 			url = excluded.url,
+			description = excluded.description,
 			status = $7,
 			closed_at = NULL
 		RETURNING id`
 
 	var id int64
 	err := m.DB.QueryRow(ctx, q,
-		j.ExternalID, j.CompanyID, j.Title, j.Location, j.URL, j.Source, StatusOpen, j.PostedAt,
+		j.ExternalID, j.CompanyID, j.Title, j.Location, j.URL, j.Source, StatusOpen, j.PostedAt, j.Description,
 	).Scan(&id)
 	if err != nil {
 		return 0, err
@@ -79,13 +83,13 @@ func (m *JobModel) Upsert(ctx context.Context, j *Job) (int64, error) {
 // Get returns a single job by ID.
 func (m *JobModel) Get(ctx context.Context, id int64) (*Job, error) {
 	const q = `
-		SELECT id, external_id, company_id, title, location, url, source, status, posted_at, created_at, closed_at
+		SELECT id, external_id, company_id, title, location, url, source, status, posted_at, created_at, closed_at, description
 		FROM jobs WHERE id = $1`
 
 	j := &Job{}
 	err := m.DB.QueryRow(ctx, q, id).Scan(
 		&j.ID, &j.ExternalID, &j.CompanyID, &j.Title, &j.Location, &j.URL, &j.Source, &j.Status,
-		&j.PostedAt, &j.CreatedAt, &j.ClosedAt,
+		&j.PostedAt, &j.CreatedAt, &j.ClosedAt, &j.Description,
 	)
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {

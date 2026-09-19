@@ -10,6 +10,10 @@
   #search { width: 100%; padding: 0.4rem; margin-bottom: 0.5rem; box-sizing: border-box; }
   #filters { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
   #filters select { flex: 1; min-width: 0; padding: 0.4rem; }
+  #detail { display: none; }
+  #detail .meta { color: #666; }
+  #detail .apply { display: inline-block; padding: 0.5rem 1rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px; }
+  #detail .desc { margin: 1rem 0; overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -22,6 +26,15 @@
   <select id="seniorityFilter"><option value="">All levels</option></select>
 </div>
 <ul id="jobs">Loading…</ul>
+
+<div id="detail">
+  <p><a href="#" id="back">← All jobs</a></p>
+  <h2 id="dTitle"></h2>
+  <p class="meta" id="dMeta"></p>
+  <a class="apply" id="dApply" target="_blank" rel="noopener">Apply</a>
+  <div class="desc" id="dDesc"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 
 <script>
 let jobs = [];
@@ -144,10 +157,30 @@ function render() {
   list.innerHTML = '';
   for (const j of filtered) {
     const li = document.createElement('li');
-    li.innerHTML = `<a href="${j.URL}" target="_blank">${j.Title}</a> <span class="company">— ${companyTitle[j.CompanyID] ?? 'unknown'} (${j.Location})</span>`;
+    li.innerHTML = `<a href="#/job/${j.ID}">${j.Title}</a> <span class="company">— ${companyTitle[j.CompanyID] ?? 'unknown'} (${j.Location})</span>`;
     list.appendChild(li);
   }
   if (filtered.length === 0) list.textContent = 'No jobs found.';
+}
+
+// Hash routing: #/job/<id> shows one job, anything else shows the list.
+// Descriptions are third-party HTML, so they go through DOMPurify.
+async function route() {
+  const m = location.hash.match(/^#\/job\/(\d+)$/);
+  document.getElementById('detail').style.display = m ? 'block' : 'none';
+  for (const id of ['search', 'filters', 'jobs']) {
+    document.getElementById(id).style.display = m ? 'none' : '';
+  }
+  if (!m) return;
+  const res = await fetch('/v1/jobs/' + m[1]);
+  if (!res.ok) { document.getElementById('dTitle').textContent = 'Job not found'; return; }
+  const j = await res.json();
+  document.getElementById('dTitle').textContent = j.Title;
+  document.getElementById('dMeta').textContent = `${companyTitle[j.CompanyID] ?? 'unknown'} — ${j.Location}`;
+  document.getElementById('dApply').href = j.URL;
+  document.getElementById('dDesc').innerHTML = j.Description
+    ? DOMPurify.sanitize(j.Description)
+    : '<em>No description available — use Apply to see the full posting.</em>';
 }
 
 async function load() {
@@ -201,7 +234,10 @@ async function load() {
   positionSelect.addEventListener('change', render);
   senioritySelect.addEventListener('change', render);
   render();
+  window.addEventListener('hashchange', route);
+  route();
 }
+document.getElementById('back').addEventListener('click', e => { e.preventDefault(); location.hash = ''; });
 load();
 </script>
 </body>

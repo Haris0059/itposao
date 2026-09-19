@@ -23,11 +23,12 @@ type atlantbhResponse struct {
 }
 
 type atlantbhJob struct {
-	Title     string `json:"title"`
-	Shortcode string `json:"shortcode"`
-	URL       string `json:"url"`
-	City      string `json:"city"`
-	Country   string `json:"country"`
+	Title       string `json:"title"`
+	Shortcode   string `json:"shortcode"`
+	URL         string `json:"url"`
+	City        string `json:"city"`
+	Country     string `json:"country"`
+	Description string `json:"description"`
 }
 
 func (a *Atlantbh) Fetch(ctx context.Context) ([]*models.Job, error) {
@@ -59,11 +60,12 @@ func (a *Atlantbh) Fetch(ctx context.Context) ([]*models.Job, error) {
 	jobs := make([]*models.Job, 0, len(body.Jobs))
 	for _, j := range body.Jobs {
 		jobs = append(jobs, &models.Job{
-			ExternalID: j.Shortcode,
-			Title:      j.Title,
-			Location:   j.City,
-			URL:        j.URL,
-			Source:     a.Name(),
+			ExternalID:  j.Shortcode,
+			Title:       j.Title,
+			Location:    j.City,
+			URL:         j.URL,
+			Description: j.Description,
+			Source:      a.Name(),
 		})
 	}
 	return jobs, nil

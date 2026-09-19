@@ -35,6 +35,7 @@ Notes for the future Postgres schema, derived from `internal/models`. No migrati
 | posted_at   | timestamp |                                           |
 | created_at  | timestamp |                                           |
 | closed_at   | timestamp | nullable, set when `status` becomes `closed` |
+| description | text      | source-provided HTML, `''` when the source has none; only returned by `GET /v1/jobs/{id}` |
 
 ## Queries
 
