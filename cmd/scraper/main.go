@@ -5,6 +5,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"flag"
 	"log/slog"
 	"os"
@@ -101,10 +102,18 @@ func main() {
 		&sources.QSS{},
 	}
 
+	var failed []string
 	for _, src := range srcs {
 		if err := run(ctx, log, companies, jobs, src); err != nil {
 			log.Error("source run failed", "source", src.Name(), "error", err)
+			failed = append(failed, src.Name())
 		}
+	}
+
+	if len(failed) > 0 {
+		log.Error("some sources failed", "sources", failed)
+		pool.Close() // os.Exit skips defers
+		os.Exit(1)
 	}
 }
 
@@ -112,6 +121,10 @@ func run(ctx context.Context, log *slog.Logger, companies *models.CompanyModel, 
 	fetched, err := src.Fetch(ctx)
 	if err != nil {
 		return err
+	}
+	// A redesigned site often yields 0 jobs with no error; reconciling would close every open job.
+	if len(fetched) == 0 {
+		return errors.New("fetched 0 jobs, skipping reconcile")
 	}
 
 	company, err := companies.FindOrCreate(ctx, companyTitle[src.Name()], "")
