@@ -69,3 +69,7 @@ func (h *HTEC) Fetch(ctx context.Context) ([]*models.Job, error) {
 	}
 	return jobs, nil
 }
+
+func (h *HTEC) FetchDescription(ctx context.Context, j *models.Job) (string, error) {
+	return jobPostingDescription(ctx, h.Client, j.URL)
+}

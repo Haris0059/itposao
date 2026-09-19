@@ -69,3 +69,7 @@ func (m *Mistral) Fetch(ctx context.Context) ([]*models.Job, error) {
 	}
 	return jobs, nil
 }
+
+func (m *Mistral) FetchDescription(ctx context.Context, j *models.Job) (string, error) {
+	return jobPostingDescription(ctx, m.Client, j.URL)
+}

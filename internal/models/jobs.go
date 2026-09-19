@@ -65,7 +65,7 @@ func (m *JobModel) Upsert(ctx context.Context, j *Job) (int64, error) {
 			title = excluded.title,
 			location = excluded.location,
 			url = excluded.url,
-			description = excluded.description,
+			description = CASE WHEN excluded.description <> '' THEN excluded.description ELSE jobs.description END,
 			status = $7,
 			closed_at = NULL
 		RETURNING id`
@@ -127,6 +127,26 @@ func (m *JobModel) Latest(ctx context.Context, limit int) ([]*Job, error) {
 		return nil, err
 	}
 	return jobs, nil
+}
+
+// Described returns the external IDs of the source's jobs that already have a
+// description, so the scraper doesn't fetch them again.
+func (m *JobModel) Described(ctx context.Context, source string) (map[string]bool, error) {
+	rows, err := m.DB.Query(ctx, `SELECT external_id FROM jobs WHERE source = $1 AND description <> ''`, source)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	ids := map[string]bool{}
+	for rows.Next() {
+		var id string
+		if err := rows.Scan(&id); err != nil {
+			return nil, err
+		}
+		ids[id] = true
+	}
+	return ids, rows.Err()
 }
 
 // Reconcile closes any open job for the given source whose external ID was

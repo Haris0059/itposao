@@ -13,3 +13,9 @@ type Source interface {
 	Name() string
 	Fetch(ctx context.Context) ([]*models.Job, error)
 }
+
+// Detailer is implemented by sources whose list response has no description;
+// the scraper calls it once per job, the first time the job is seen.
+type Detailer interface {
+	FetchDescription(ctx context.Context, j *models.Job) (string, error)
+}

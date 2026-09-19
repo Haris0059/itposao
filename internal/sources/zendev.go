@@ -69,3 +69,7 @@ func (z *ZenDev) Fetch(ctx context.Context) ([]*models.Job, error) {
 	}
 	return jobs, nil
 }
+
+func (z *ZenDev) FetchDescription(ctx context.Context, j *models.Job) (string, error) {
+	return jobPostingDescription(ctx, z.Client, j.URL)
+}

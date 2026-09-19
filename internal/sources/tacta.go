@@ -69,3 +69,7 @@ func (t *Tacta) Fetch(ctx context.Context) ([]*models.Job, error) {
 	}
 	return jobs, nil
 }
+
+func (t *Tacta) FetchDescription(ctx context.Context, j *models.Job) (string, error) {
+	return jobPostingDescription(ctx, t.Client, j.URL)
+}

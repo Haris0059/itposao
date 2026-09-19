@@ -132,11 +132,24 @@ func run(ctx context.Context, log *slog.Logger, companies *models.CompanyModel, 
 		return err
 	}
 
+	described := map[string]bool{}
+	detailer, canDetail := src.(sources.Detailer)
+	if canDetail {
+		if described, err = jobs.Described(ctx, src.Name()); err != nil {
+			return err
+		}
+	}
+
 	seenIDs := make([]string, 0, len(fetched))
 	for _, j := range fetched {
 		j.CompanyID = company.ID
 		if j.PostedAt.IsZero() {
 			j.PostedAt = time.Now()
+		}
+		if canDetail && j.Description == "" && !described[j.ExternalID] {
+			if j.Description, err = detailer.FetchDescription(ctx, j); err != nil {
+				log.Warn("fetch description failed", "source", src.Name(), "job", j.ExternalID, "error", err)
+			}
 		}
 		if _, err := jobs.Upsert(ctx, j); err != nil {
 			return err
