@@ -21,7 +21,7 @@ const assecoSEECareersURL = "https://asee.peopleforce.io/careers"
 const assecoSEEMaxPages = 20
 
 // assecoSEEJobRe matches one job card link: href, then title text.
-var assecoSEEJobRe = regexp.MustCompile(`<a class="stretched-link tw-text-black" data-turbo-frame="_top" href="([^"]+)">([^<]*)</a>`)
+var assecoSEEJobRe = regexp.MustCompile(`<a class="(?:tw-)?stretched-link tw-text-black" data-turbo-frame="_top" href="([^"]+)">([^<]*)</a>`)
 
 // assecoSEELocationRe matches the location line (marked by a map-pin icon)
 // that follows a job card's title in the same card block.

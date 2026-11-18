@@ -163,15 +163,6 @@
       "notes": "Implemented in internal/sources/linkgroup.go. link.ba is dead; link-group.eu has one hand-maintained Drupal page listing openings per country (some link out to posao.ba)."
     },
     {
-      "source": "mistral",
-      "name": "Mistral (now part of HTEC)",
-      "website": "https://www.mistral.ba/",
-      "careers_url": "https://www.mistral.ba/careers/",
-      "ats": "talentlyft",
-      "api_url": "https://api.talentlyft.com/v2/public/mistral/jobs",
-      "notes": "Valid TalentLyft endpoint (own slug, separate from htecgroup), currently 0 open postings — endpoint structure confirmed working, just empty at time of check"
-    },
-    {
       "source": "payoneer",
       "name": "Payoneer",
       "website": "https://www.payoneer.com/",
@@ -202,10 +193,10 @@
       "source": "symphony",
       "name": "Symphony (Symphony Digital / Symphony Group Sarajevo)",
       "website": "https://symphony.is/",
-      "careers_url": "https://symphony.breezy.hr/",
-      "ats": "breezy",
-      "api_url": "https://symphony.breezy.hr/json",
-      "notes": "Endpoint live and returns valid JSON (empty array at time of check, no open postings). Alt Lever link jobs.eu.lever.co/symphony did NOT resolve (api.lever.co/v0/postings/symphony returns \"Document not found\") — that slug/link is stale, use the Breezy one."
+      "careers_url": "https://jobs.eu.lever.co/symphony",
+      "ats": "lever",
+      "api_url": "https://api.eu.lever.co/v0/postings/symphony?mode=json",
+      "notes": "Moved from Breezy to Lever EU region (api.eu.lever.co); the global api.lever.co host returns Document not found."
     },
     {
       "source": "systemverification",
@@ -220,9 +211,9 @@
       "source": "tacta",
       "name": "Tacta",
       "website": null,
-      "careers_url": null,
+      "careers_url": "https://tacta-bv.talentlyft.com/",
       "ats": "talentlyft",
-      "api_url": "https://api.talentlyft.com/v2/public/tacta/jobs",
+      "api_url": "https://api.talentlyft.com/v2/public/tacta-bv/jobs",
       "notes": "Implemented in internal/sources/tacta.go (TalentLyft widget on tacta.io/careers; 0 open jobs at time of implementation, 2026-09-17)."
     },
     {
@@ -268,6 +259,14 @@
       "ats": "strapi",
       "api_url": "https://api.smartlab.ba/api/jobs",
       "notes": "Skipped 2026-09-17: smartlab.ba careers is backed by a Strapi JSON API, but it only holds 2 stale postings from 2022 with deadlines in 2021. Revisit if the board gets updated."
+    },
+    {
+      "name": "Mistral (now part of HTEC)",
+      "website": "https://www.mistral.ba/",
+      "careers_url": "https://www.mistral.ba/careers/",
+      "ats": "talentlyft",
+      "api_url": "https://api.talentlyft.com/v2/public/mistral/jobs",
+      "notes": "Scraper removed 2026-11-18: mistral.ba unreachable, merged into HTEC (already scraped), TalentLyft board still empty. Re-add if the board fills up."
     }
   ],
   "blocked": [

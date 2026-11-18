@@ -10,7 +10,7 @@ import (
 	"itposao/internal/models"
 )
 
-const tactaJobsURL = "https://api.talentlyft.com/v2/public/tacta/jobs"
+const tactaJobsURL = "https://api.talentlyft.com/v2/public/tacta-bv/jobs"
 
 // Tacta fetches job listings from Tacta's TalentLyft board.
 type Tacta struct {

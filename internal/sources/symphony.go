@@ -5,16 +5,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
+	"time"
 
 	"itposao/internal/models"
 )
 
-const (
-	symphonyJobsURL = "https://symphony.breezy.hr/json"
-	symphonyBaseURL = "https://symphony.breezy.hr/p/"
-)
+// Symphony moved from Breezy HR to Lever's EU region; the global
+// api.lever.co host returns "Document not found" for this slug.
+const symphonyJobsURL = "https://api.eu.lever.co/v0/postings/symphony?mode=json"
 
-// Symphony fetches job listings from Symphony's Breezy HR careers board.
+// Symphony fetches job listings from Symphony's Lever careers board.
 type Symphony struct {
 	Client *http.Client
 }
@@ -22,13 +23,19 @@ type Symphony struct {
 func (s *Symphony) Name() string { return "symphony" }
 
 type symphonyJob struct {
-	ID         string `json:"_id"`
-	FriendlyID string `json:"friendly_id"`
-	Name       string `json:"name"`
-	Location   struct {
-		City    string `json:"city"`
-		Country string `json:"country"`
-	} `json:"location"`
+	ID          string `json:"id"`
+	Text        string `json:"text"`
+	HostedURL   string `json:"hostedUrl"`
+	CreatedAt   int64  `json:"createdAt"`
+	Description string `json:"description"`
+	Additional  string `json:"additional"`
+	Categories  struct {
+		Location string `json:"location"`
+	} `json:"categories"`
+	Lists []struct {
+		Text    string `json:"text"`
+		Content string `json:"content"`
+	} `json:"lists"`
 }
 
 func (s *Symphony) Fetch(ctx context.Context) ([]*models.Job, error) {
@@ -59,12 +66,23 @@ func (s *Symphony) Fetch(ctx context.Context) ([]*models.Job, error) {
 
 	jobs := make([]*models.Job, 0, len(body))
 	for _, j := range body {
+		// Lever splits a posting into intro, titled lists (<li> items), and
+		// a closing section; stitch them back into one HTML description.
+		var desc strings.Builder
+		desc.WriteString(j.Description)
+		for _, l := range j.Lists {
+			fmt.Fprintf(&desc, "<h3>%s</h3><ul>%s</ul>", l.Text, l.Content)
+		}
+		desc.WriteString(j.Additional)
+
 		jobs = append(jobs, &models.Job{
-			ExternalID: j.ID,
-			Title:      j.Name,
-			Location:   j.Location.City,
-			URL:        symphonyBaseURL + j.FriendlyID,
-			Source:     s.Name(),
+			ExternalID:  j.ID,
+			Title:       j.Text,
+			Location:    j.Categories.Location,
+			URL:         j.HostedURL,
+			Description: desc.String(),
+			PostedAt:    time.UnixMilli(j.CreatedAt),
+			Source:      s.Name(),
 		})
 	}
 	return jobs, nil
