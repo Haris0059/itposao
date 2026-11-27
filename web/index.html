@@ -2,100 +2,178 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>itposao — dev viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IT Jobs in BiH · Haris Skeledžija</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#b1b9f9">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  body { font-family: sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; }
-  li { margin-bottom: 0.75rem; }
-  .company { color: #666; }
-  #search { width: 100%; padding: 0.4rem; margin-bottom: 0.5rem; box-sizing: border-box; }
-  #filters { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-  #filters select { flex: 1; min-width: 0; padding: 0.4rem; }
-  #detail { display: none; }
-  #detail .meta { color: #666; }
-  #detail .apply { display: inline-block; padding: 0.5rem 1rem; background: #111; color: #fff; text-decoration: none; border-radius: 4px; }
-  #detail .desc { margin: 1rem 0; overflow-wrap: anywhere; }
+/* Design tokens and primitives copied from haris.rip (static/styles.css)
+   so this subdomain looks like the main site. Keep them in sync by hand. */
+@font-face { font-family: 'Space Grotesk'; font-weight: 300 700; font-display: swap; src: url('/fonts/space-grotesk-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Space Grotesk'; font-weight: 300 700; font-display: swap; src: url('/fonts/space-grotesk-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 400 800; font-display: swap; src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 400 800; font-display: swap; src: url('/fonts/jetbrains-mono-latin-ext.woff2') format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: hsl(230 14% 5%); --ink: hsl(230 20% 93%); --dim: hsl(230 14% 80%);
+  --muted: hsl(230 10% 62%); --rule: hsl(230 12% 22%);
+  --primary-hsl: 233.3 85.7% 83.5%; /* #b1b9f9 */
+  --primary: hsl(var(--primary-hsl)); --primary-fg: hsl(230 14% 5%);
+  --primary-soft: hsl(var(--primary-hsl) / 0.14);
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+}
+::selection { background: hsl(var(--primary-hsl) / 0.3); color: var(--primary-fg); }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-mono);
+  font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased;
+}
+a { color: var(--primary); text-decoration: none; border-bottom: 1px dotted var(--primary); }
+a:hover { background: var(--primary-soft); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 2px; }
+hr { border: none; border-top: 1px dashed var(--rule); margin: 32px 0; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 120px; }
+
+.prompt { color: var(--muted); }
+.prompt b { color: var(--primary); font-weight: 500; }
+.prompt a.home { border-bottom: none; }
+
+h1 { color: var(--ink); font-size: 30px; font-weight: 700; letter-spacing: 0.01em; margin: 0 0 4px; }
+.meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+.meta span { margin-right: 18px; }
+.lede { max-width: 66ch; margin: 0 0 18px; font-family: var(--font-sans); font-size: 17px; }
+
+/* ── Filters: terminal-style inputs ── */
+.search { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px dashed var(--rule); padding: 6px 0; }
+.search label { color: var(--primary); }
+.search input {
+  flex: 1; min-width: 0; background: none; border: none; outline: none;
+  color: var(--ink); font: inherit; caret-color: var(--primary);
+}
+.search input::placeholder { color: var(--muted); }
+.search:focus-within { border-bottom-color: var(--primary); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 14px 0 0; font-size: 14px; }
+.filters select {
+  appearance: none; background: none; border: none; border-bottom: 1px dotted var(--rule);
+  color: var(--dim); font: inherit; padding: 2px 0; cursor: pointer; text-transform: lowercase;
+}
+.filters select:hover, .filters select:focus-visible { color: var(--primary); border-color: var(--primary); }
+.filters select option { background: var(--bg); color: var(--ink); }
+.filters select.on { color: var(--primary); border-bottom-color: var(--primary); }
+
+/* ── Job rows (same grid as haris.rip /cv rows) ── */
+.block { margin: 36px 0; }
+.block h2 {
+  display: flex; align-items: baseline; gap: 10px; color: var(--primary);
+  font-size: 26px; font-weight: 700; letter-spacing: 0.01em; margin: 0 0 16px;
+}
+.block h2::before { content: "## "; color: var(--muted); font-weight: 400; }
+.block h2 .count { margin-left: auto; color: var(--muted); font-size: 14px; font-weight: 400; }
+.row {
+  display: grid; grid-template-columns: 60px 1fr 150px; align-items: baseline; gap: 16px;
+  padding: 14px 0; border-bottom: 1px dashed var(--rule); text-transform: lowercase;
+}
+.row:last-child { border-bottom: none; }
+.row .yr { color: var(--dim); font-size: 14px; font-variant-numeric: tabular-nums; }
+.row .what a b { color: inherit; font-weight: 500; }
+.row .what span { display: block; margin-top: 4px; font-family: var(--font-sans); font-size: 16px; line-height: 1.6; color: var(--dim); }
+.row .where { color: var(--muted); font-size: 14px; text-align: right; overflow-wrap: anywhere; }
+.empty { color: var(--muted); padding: 14px 0; }
+
+/* ── Detail view ── */
+#detail { display: none; }
+.back { display: inline-block; font-size: 14px; margin-bottom: 24px; }
+#dTitle { text-transform: lowercase; }
+#dMeta { text-transform: lowercase; }
+.apply {
+  display: inline-block; padding: 6px 14px; border: 1px solid var(--primary);
+  border-radius: 2px; font-size: 14px;
+}
+.apply:hover { background: var(--primary); color: var(--primary-fg); }
+.desc {
+  margin: 28px 0; font-family: var(--font-sans); font-size: 17px; line-height: 1.7;
+  color: var(--ink); overflow-wrap: anywhere;
+}
+.desc > * + * { margin-top: 14px; }
+.desc h1, .desc h2, .desc h3, .desc h4 { font-family: var(--font-mono); font-size: 20px; color: var(--primary); margin-top: 28px; }
+.desc ul, .desc ol { padding-left: 22px; }
+.desc li + li { margin-top: 4px; }
+.desc img { max-width: 100%; height: auto; }
+.desc em { color: var(--muted); }
+
+footer {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+  gap: 12px; color: var(--muted); font-size: 14px; margin-top: 48px;
+}
+footer a { color: inherit; border-bottom: none; }
+footer a:hover { color: var(--primary); }
+
+@media (width <= 640px) {
+  .wrap { padding: 40px 16px 96px; }
+  body { font-size: 15px; }
+  .lede, .desc { font-size: 16px; }
+  .row .what span { font-size: 15px; }
+  .row .yr, .row .where, .meta, footer { font-size: 13px; }
+  .row { grid-template-columns: 56px 1fr; gap: 8px; }
+  .row .where { grid-column: 2; text-align: left; margin-top: -2px; }
+  h1 { font-size: 24px; }
+}
 </style>
 </head>
 <body>
-<h1>itposao jobs (dev viewer)</h1>
-<input id="search" type="search" placeholder="Search title or location…">
-<div id="filters">
-  <select id="companyFilter"><option value="">All companies</option></select>
-  <select id="locationFilter"><option value="">All countries</option></select>
-  <select id="positionFilter"><option value="">All positions</option></select>
-  <select id="seniorityFilter"><option value="">All levels</option></select>
-</div>
-<ul id="jobs">Loading…</ul>
+<div class="wrap">
+  <div id="list">
+    <h1>it jobs in bih</h1>
+    <div class="meta"><span>~/bosnia</span><span id="stats">loading…</span></div>
 
-<div id="detail">
-  <p><a href="#" id="back">← All jobs</a></p>
-  <h2 id="dTitle"></h2>
-  <p class="meta" id="dMeta"></p>
-  <a class="apply" id="dApply" target="_blank" rel="noopener">Apply</a>
-  <div class="desc" id="dDesc"></div>
+    <div class="search">
+      <label for="search">grep</label>
+      <input id="search" type="search" placeholder="title, company or city…" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="filters">
+      <select id="companyFilter" aria-label="Company"><option value="">all companies</option></select>
+      <select id="cityFilter" aria-label="City"><option value="">all cities</option></select>
+      <select id="positionFilter" aria-label="Position"><option value="">all positions</option></select>
+      <select id="seniorityFilter" aria-label="Level"><option value="">all levels</option></select>
+    </div>
+
+    <section class="block" aria-label="jobs">
+      <h2>open <span class="count" id="count"></span></h2>
+      <div id="jobs"><p class="empty">loading…</p></div>
+    </section>
+  </div>
+
+  <div id="detail">
+    <a href="#" class="back" id="back">← ~/jobs</a>
+    <h1 id="dTitle"></h1>
+    <div class="meta" id="dMeta"></div>
+    <a class="apply" id="dApply" target="_blank" rel="noopener noreferrer">apply ↗</a>
+    <div class="desc" id="dDesc"></div>
+    <a class="apply" id="dApply2" target="_blank" rel="noopener noreferrer">apply ↗</a>
+  </div>
+
+  <hr>
+  <footer>
+    <span class="prompt"><a href="https://haris.rip/" class="home"><b>haris@sarajevo</b></a> :~$ cat about</span>
+    <span>scraped from company career pages · updated every 6h</span>
+  </footer>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
-
 <script>
 let jobs = [];
 let companyTitle = {};
 
-// Locations are messy free text: sometimes a country name ("Bosnia and
-// Herzegovina"), sometimes just a city ("Sarajevo") or an abbreviation
-// ("BiH", "USA"). These aliases were resolved once against the open-source
-// dr5hn/countries-states-cities-database (github.com/dr5hn/countries-states-
-// cities-database) plus a couple of cities missing from it (Rugvica,
-// Beograd), so city/country name matching doesn't have to be guessed again.
-const CITY_TO_COUNTRY = {
-  'Skopje': 'North Macedonia',
-  'Bucharest': 'Romania',
-  'Istanbul': 'Turkey',
-  'Bogota': 'Colombia',
-  'Lima': 'Peru',
-  'Brno': 'Czechia',
-  'Sevilla': 'Spain',
-  'Alicante': 'Spain',
-  'Armação de Pêra': 'Portugal',
-  'Banja Luka': 'Bosnia and Herzegovina',
-  'Belgrade': 'Serbia',
-  'Novi Sad': 'Serbia',
-  'Split': 'Croatia',
-  'Zagreb': 'Croatia',
-  'Rijeka': 'Croatia',
-  'Vodnjan': 'Croatia',
-  'Rugvica': 'Croatia',
-  'Warsaw': 'Poland',
-  'Warszawa': 'Poland',
-  'Budapest': 'Hungary',
-  'Munich': 'Germany',
-  'Sarajevo': 'Bosnia and Herzegovina',
-  'Beograd': 'Serbia',
-  'Seattle': 'United States',
-  'San Francisco': 'United States',
-  'Palo Alto': 'United States',
-  'Medellin': 'Colombia',
-  'Bosnia & Herzegovina': 'Bosnia and Herzegovina', // Symphony (Lever)
-};
-const ABBR_TO_COUNTRY = {
-  'BiH': 'Bosnia and Herzegovina',
-  'USA': 'United States',
-  'UK': 'United Kingdom',
-  'UAE': 'United Arab Emirates',
-  'MX': 'Mexico',
-};
-
-// True if a job's raw Location string refers to the given country, whether
-// it names the country directly, an abbreviation, or a known city.
-function locationIsCountry(location, countryName) {
-  if (location.includes(countryName)) return true;
-  for (const [abbr, country] of Object.entries(ABBR_TO_COUNTRY)) {
-    if (country === countryName && new RegExp(`\\b${abbr}\\b`).test(location)) return true;
-  }
-  for (const [city, country] of Object.entries(CITY_TO_COUNTRY)) {
-    if (country === countryName && location.includes(city)) return true;
-  }
-  return false;
-}
+// The scraper only stores BiH jobs, so the location filter is by city.
+// Matched as case-insensitive substrings of the free-text Location.
+const CITIES = ['Sarajevo', 'Banja Luka', 'Mostar', 'Tuzla', 'Zenica', 'Bijeljina', 'Brčko', 'Bihać', 'Remote'];
+const inCity = (location, city) => location.toLowerCase().includes(city.toLowerCase());
+// Short location for the list: matched cities ("sarajevo · mostar"), else the raw text.
+const shortLocation = location => CITIES.filter(c => inCity(location, c)).join(' · ') || location;
 
 // Job title -> broad discipline, first matching rule wins. Titles are messy
 // (bilingual, freeform), so this covers what's actually in the dataset
@@ -138,108 +216,105 @@ function classifySeniority(title) {
   return levels.length ? levels : ['Unspecified'];
 }
 
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
+const fmtDate = iso => new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }).toLowerCase();
+const $ = id => document.getElementById(id);
+
 function render() {
-  const q = document.getElementById('search').value.trim().toLowerCase();
-  const companyID = document.getElementById('companyFilter').value;
-  const location = document.getElementById('locationFilter').value;
-  const position = document.getElementById('positionFilter').value;
-  const seniority = document.getElementById('seniorityFilter').value;
+  const q = $('search').value.trim().toLowerCase();
+  const companyID = $('companyFilter').value;
+  const city = $('cityFilter').value;
+  const position = $('positionFilter').value;
+  const seniority = $('seniorityFilter').value;
+  for (const id of ['companyFilter', 'cityFilter', 'positionFilter', 'seniorityFilter']) {
+    $(id).classList.toggle('on', $(id).value !== '');
+  }
 
   const filtered = jobs.filter(j => {
     if (companyID && String(j.CompanyID) !== companyID) return false;
-    if (location && !locationIsCountry(j.Location, location)) return false;
+    if (city && !inCity(j.Location, city)) return false;
     if (position && classifyPosition(j.Title) !== position) return false;
     if (seniority && !classifySeniority(j.Title).includes(seniority)) return false;
     if (!q) return true;
-    const haystack = `${j.Title} ${j.Location} ${companyTitle[j.CompanyID] ?? ''}`.toLowerCase();
-    return haystack.includes(q);
+    return `${j.Title} ${j.Location} ${companyTitle[j.CompanyID] ?? ''}`.toLowerCase().includes(q);
   });
 
-  const list = document.getElementById('jobs');
-  list.innerHTML = '';
-  for (const j of filtered) {
-    const li = document.createElement('li');
-    li.innerHTML = `<a href="#/job/${j.ID}">${j.Title}</a> <span class="company">— ${companyTitle[j.CompanyID] ?? 'unknown'} (${j.Location})</span>`;
-    list.appendChild(li);
-  }
-  if (filtered.length === 0) list.textContent = 'No jobs found.';
+  $('count').textContent = `${filtered.length}/${jobs.length}`;
+  $('jobs').innerHTML = filtered.length
+    ? filtered.map(j => `
+      <div class="row">
+        <div class="yr">${fmtDate(j.PostedAt)}</div>
+        <div class="what">
+          <a href="#/job/${j.ID}"><b>${esc(j.Title)}</b></a>
+          <span>${esc(companyTitle[j.CompanyID] ?? 'unknown')}</span>
+        </div>
+        <div class="where" title="${esc(j.Location)}">${esc(shortLocation(j.Location))}</div>
+      </div>`).join('')
+    : '<p class="empty">grep: no matches</p>';
 }
 
 // Hash routing: #/job/<id> shows one job, anything else shows the list.
 // Descriptions are third-party HTML, so they go through DOMPurify.
 async function route() {
   const m = location.hash.match(/^#\/job\/(\d+)$/);
-  document.getElementById('detail').style.display = m ? 'block' : 'none';
-  for (const id of ['search', 'filters', 'jobs']) {
-    document.getElementById(id).style.display = m ? 'none' : '';
-  }
+  $('detail').style.display = m ? 'block' : 'none';
+  $('list').style.display = m ? 'none' : '';
+  window.scrollTo(0, 0);
   if (!m) return;
+  $('dTitle').textContent = 'loading…';
+  $('dMeta').textContent = '';
+  $('dDesc').innerHTML = '';
+  $('dApply').style.display = $('dApply2').style.display = 'none';
   const res = await fetch('/v1/jobs/' + m[1]);
-  if (!res.ok) { document.getElementById('dTitle').textContent = 'Job not found'; return; }
+  if (!res.ok) { $('dTitle').textContent = 'no such job'; return; }
   const j = await res.json();
-  document.getElementById('dTitle').textContent = j.Title;
-  document.getElementById('dMeta').textContent = `${companyTitle[j.CompanyID] ?? 'unknown'} — ${j.Location}`;
-  document.getElementById('dApply').href = j.URL;
-  document.getElementById('dDesc').innerHTML = j.Description
+  document.title = `${j.Title} · IT Jobs in BiH`;
+  $('dTitle').textContent = j.Title;
+  $('dMeta').innerHTML = `<span>${esc(companyTitle[j.CompanyID] ?? 'unknown')}</span><span>${esc(j.Location)}</span><span>${fmtDate(j.PostedAt)}</span>`;
+  $('dApply').href = $('dApply2').href = j.URL;
+  $('dApply').style.display = '';
+  $('dApply2').style.display = j.Description ? '' : 'none';
+  $('dDesc').innerHTML = j.Description
     ? DOMPurify.sanitize(j.Description)
-    : '<em>No description available — use Apply to see the full posting.</em>';
+    : '<em>no description available — use apply to see the full posting.</em>';
+}
+
+function fillSelect(id, values) {
+  for (const [value, label] of values) {
+    const opt = document.createElement('option');
+    opt.value = value;
+    opt.textContent = label;
+    $(id).appendChild(opt);
+  }
 }
 
 async function load() {
-  const [jobsRes, companies, countries] = await Promise.all([
+  const [jobsRes, companies] = await Promise.all([
     fetch('/v1/jobs').then(r => r.json()),
     fetch('/v1/companies').then(r => r.json()),
-    fetch('/v1/countries').then(r => r.json()),
   ]);
   jobs = jobsRes || [];
   companyTitle = Object.fromEntries((companies || []).map(c => [c.ID, c.Title]));
 
-  const select = document.getElementById('companyFilter');
-  for (const c of companies || []) {
-    const opt = document.createElement('option');
-    opt.value = c.ID;
-    opt.textContent = c.Title;
-    select.appendChild(opt);
-  }
+  const hiring = new Set(jobs.map(j => j.CompanyID));
+  const hiringCompanies = (companies || []).filter(c => hiring.has(c.ID)).sort((a, b) => a.Title.localeCompare(b.Title));
+  $('stats').textContent = `${jobs.length} open · ${hiringCompanies.length} companies`;
 
-  // Only offer countries (from the countries table) that at least one job
-  // actually resolves to, via locationIsCountry above.
-  const locationSelect = document.getElementById('locationFilter');
-  for (const c of (countries || []).filter(c => jobs.some(j => locationIsCountry(j.Location, c.Name)))) {
-    const opt = document.createElement('option');
-    opt.value = c.Name;
-    opt.textContent = c.Name;
-    locationSelect.appendChild(opt);
-  }
-
-  const positions = new Set(jobs.map(j => classifyPosition(j.Title)));
-  const positionSelect = document.getElementById('positionFilter');
-  for (const p of [...positions].sort()) {
-    const opt = document.createElement('option');
-    opt.value = p;
-    opt.textContent = p;
-    positionSelect.appendChild(opt);
-  }
-
+  fillSelect('companyFilter', hiringCompanies.map(c => [c.ID, c.Title]));
+  fillSelect('cityFilter', CITIES.filter(c => jobs.some(j => inCity(j.Location, c))).map(c => [c, c]));
+  fillSelect('positionFilter', [...new Set(jobs.map(j => classifyPosition(j.Title)))].sort().map(p => [p, p]));
   const seniorities = new Set(jobs.flatMap(j => classifySeniority(j.Title)));
-  const senioritySelect = document.getElementById('seniorityFilter');
-  for (const s of SENIORITY_ORDER.filter(s => seniorities.has(s))) {
-    const opt = document.createElement('option');
-    opt.value = s;
-    opt.textContent = s;
-    senioritySelect.appendChild(opt);
-  }
+  fillSelect('seniorityFilter', SENIORITY_ORDER.filter(s => seniorities.has(s)).map(s => [s, s]));
 
-  document.getElementById('search').addEventListener('input', render);
-  select.addEventListener('change', render);
-  locationSelect.addEventListener('change', render);
-  positionSelect.addEventListener('change', render);
-  senioritySelect.addEventListener('change', render);
+  $('search').addEventListener('input', render);
+  for (const id of ['companyFilter', 'cityFilter', 'positionFilter', 'seniorityFilter']) {
+    $(id).addEventListener('change', render);
+  }
   render();
   window.addEventListener('hashchange', route);
   route();
 }
-document.getElementById('back').addEventListener('click', e => { e.preventDefault(); location.hash = ''; });
+$('back').addEventListener('click', e => { e.preventDefault(); location.hash = ''; document.title = 'IT Jobs in BiH · Haris Skeledžija'; });
 load();
 </script>
 </body>

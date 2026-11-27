@@ -18,7 +18,7 @@ Adding a job source requires three edits — do all three, in this order:
    - Add an entry to the `companyTitle` map (source slug → human display name).
    - Add the source to the `srcs` slice literal.
 
-3. **Add location aliases in `web/index.html`** if the source introduces new location strings not already covered by `CITY_TO_COUNTRY`/`ABBR_TO_COUNTRY`. Country matching there is substring-based against `countries.name`, not a foreign key — unmapped city names won't get filtered by country correctly.
+3. **Check BiH location matching**: if the source uses a BiH city not yet covered, add it to `bihRe` in `cmd/scraper/main.go` (jobs outside BiH are dropped before saving) and to `CITIES` in `web/index.html` (the city filter).
 
 Naming note: the source's Go struct name is PascalCase (`HTEC`, `KingICT`), but `Name()`'s returned slug is inconsistent across sources (`"king-ict"`, `"cyberarrow"`) — pick a slug consistent with neighboring entries in `companyTitle`, don't assume a fixed convention.
 

@@ -168,8 +168,8 @@ func run(ctx context.Context, log *slog.Logger, companies *models.CompanyModel, 
 }
 
 // bihRe matches location text pointing at Bosnia and Herzegovina: the
-// country name, "BiH", or a BiH city. Mirrors the BiH entries of
-// web/index.html's CITY_TO_COUNTRY/ABBR_TO_COUNTRY.
+// country name, "BiH", or a BiH city. Keep the city list in step with
+// CITIES in web/index.html.
 // ponytail: keyword list, a job in an unlisted BiH city is dropped; add the
 // city here when one shows up.
 var bihRe = regexp.MustCompile(`(?i)bosn|\bbih\b|sarajevo|banja ?luka|tuzla|mostar|zenica|bijeljina|brčko|brcko|bihać|bihac`)

@@ -24,7 +24,7 @@ go run ./cmd/api -addr :8080 -dsn "$DATABASE_URL"
 
 1. Add `internal/sources/<company>.go` implementing the `Source` interface (`internal/sources/source.go`): `Name() string`, `Fetch(ctx) ([]*models.Job, error)`.
 2. Register it in `cmd/scraper/main.go` in **two** places: the `companyTitle` map (source name → display name) and the `srcs` slice literal.
-3. Add location alias entries in `web/index.html`'s `CITY_TO_COUNTRY`/`ABBR_TO_COUNTRY` maps if the source introduces new location strings — country matching is substring-based against `countries.name`, not an FK.
+3. Check the source's location strings: if the source uses a BiH city not yet covered, add it to `bihRe` in `cmd/scraper/main.go` (jobs outside BiH are dropped before saving) and to `CITIES` in `web/index.html` (the city filter).
 
 Source struct names are PascalCase (`HTEC`, `KingICT`), but `Name()` slugs are inconsistent (`"king-ict"` vs `"cyberarrow"`) — check the `companyTitle` map for the exact string rather than assuming a convention.
 
