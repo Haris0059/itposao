@@ -9,6 +9,7 @@ import (
 	"flag"
 	"log/slog"
 	"os"
+	"regexp"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -140,6 +141,9 @@ func run(ctx context.Context, log *slog.Logger, companies *models.CompanyModel, 
 
 	seenIDs := make([]string, 0, len(fetched))
 	for _, j := range fetched {
+		if !inBiH(j.Location) {
+			continue // not stored, so Reconcile closes any already open
+		}
 		j.CompanyID = company.ID
 		if j.PostedAt.IsZero() {
 			j.PostedAt = time.Now()
@@ -159,6 +163,15 @@ func run(ctx context.Context, log *slog.Logger, companies *models.CompanyModel, 
 		return err
 	}
 
-	log.Info("source synced", "source", src.Name(), "fetched", len(fetched))
+	log.Info("source synced", "source", src.Name(), "fetched", len(fetched), "bih", len(seenIDs))
 	return nil
 }
+
+// bihRe matches location text pointing at Bosnia and Herzegovina: the
+// country name, "BiH", or a BiH city. Mirrors the BiH entries of
+// web/index.html's CITY_TO_COUNTRY/ABBR_TO_COUNTRY.
+// ponytail: keyword list, a job in an unlisted BiH city is dropped; add the
+// city here when one shows up.
+var bihRe = regexp.MustCompile(`(?i)bosn|\bbih\b|sarajevo|banja ?luka|tuzla|mostar|zenica|bijeljina|brčko|brcko|bihać|bihac`)
+
+func inBiH(location string) bool { return bihRe.MatchString(location) }
